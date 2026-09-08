@@ -784,12 +784,17 @@ function switchStock(key) {
     b.classList.toggle('active', b.dataset.stock === key);
   });
 
-  /* 更新日期范围 */
+  /* 更新日期范围 - 默认近1年 */
   const minD = DATA[0].d, maxD = DATA[DATA.length-1].d;
   document.getElementById('hintMinDate').textContent = minD;
   document.getElementById('hintMaxDate').textContent = maxD;
-  document.getElementById('startDate').value = minD;
-  document.getElementById('endDate').value = maxD;
+  const endIdx = DATA.length - 1;
+  const endDateObj = new Date(DATA[endIdx].d);
+  const target1y = new Date(endDateObj); target1y.setFullYear(target1y.getFullYear() - 1);
+  let startIdx1y = endIdx;
+  for (let i = endIdx; i >= 0; i--) { if (DATA[i].d <= target1y.toISOString().slice(0,10)) { startIdx1y = i; break; } }
+  document.getElementById('startDate').value = DATA[startIdx1y].d;
+  document.getElementById('endDate').value = DATA[endIdx].d;
   document.getElementById('tagLastClose').textContent = maxD + ' 收盘价: ' + DATA[DATA.length-1].c;
 
   /* 更新成本标签 */
@@ -797,9 +802,9 @@ function switchStock(key) {
     ? '成本: 佣金万2.5 + 印花税万5 + 滑点0.1%'
     : '成本: 佣金万2.5 + 滑点0.1% (ETF免印花税)';
 
-  /* 重置快捷按钮 */
+  /* 重置快捷按钮 - 默认近1年 */
   document.querySelectorAll('.quick-btns button').forEach(b => b.classList.remove('active'));
-  document.querySelector('.quick-btns button[data-years="5"]').classList.add('active');
+  document.querySelector('.quick-btns button[data-years="1"]').classList.add('active');
 
   /* 更新标题 */
   document.title = '网格策略回测看板';
