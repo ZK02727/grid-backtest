@@ -422,7 +422,7 @@ function runHold(sub, INITIAL, divMap, splitMap, initPos) {
   const vol = Math.sqrt(variance) * Math.sqrt(245);
   const sharpe = vol > 0 ? ((mean*245) - 0) / vol : 0;
 
-  return { name: '买入持有', desc: '基准: 按初始仓位买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, equity };
+  return { name: '买入持有', desc: '基准: 按初始仓位买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: '-', grid_high: null, grid_low: null, equity };
 }
 
 function runPairGrid(sub, config, INIT, divMap, splitMap, initPosBudget) {
@@ -572,7 +572,30 @@ function runPairGrid(sub, config, INIT, divMap, splitMap, initPosBudget) {
   const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
   let gridProfit = 0;
   if (totalBoughtShares > 0) gridProfit = totalSellProceeds - totalBuyCost * (soldShares / totalBoughtShares);
-  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: INIT - startStockValue, end_stock_value: shares * lastClose, equity };
+  /* 判断结束时是否跑出网格区间 */
+  const sellKeys = Object.keys(awaitSell).map(parseFloat);
+  const buyKeys = Object.keys(awaitBuy).map(parseFloat);
+  let gridStatus, gridHigh, gridLow;
+  if (sellKeys.length === 0 && buyKeys.length === 0) {
+    gridStatus = '网格清空';
+  } else if (sellKeys.length === 0) {
+    gridStatus = '涨穿网格';
+    gridLow = buyKeys.length > 0 ? Math.min(...buyKeys) : null;
+  } else if (buyKeys.length === 0) {
+    gridStatus = '跌破网格';
+    gridHigh = sellKeys.length > 0 ? Math.max(...sellKeys) : null;
+  } else {
+    gridHigh = Math.max(...sellKeys);
+    gridLow = Math.min(...buyKeys);
+    if (lastClose > gridHigh) {
+      gridStatus = '涨穿网格';
+    } else if (lastClose < gridLow) {
+      gridStatus = '跌破网格';
+    } else {
+      gridStatus = '网格内';
+    }
+  }
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: gridStatus, grid_high: gridHigh, grid_low: gridLow, equity };
 }
 
 /* ================= 渲染 ================= */
@@ -677,6 +700,8 @@ function renderStrategies() {
     const pnl = d.final_equity - d.start_equity;
     const pnlStr = (pnl >= 0 ? '+' : '') + fmtWan(Math.abs(pnl));
     const pnlClass = pnl >= 0 ? 'cell-green' : 'cell-red';
+    const gStatus = d.grid_status || '-';
+    const gClass = gStatus === '网格内' ? 'cell-green' : gStatus === '涨穿网格' ? 'cell-yellow' : gStatus === '跌破网格' ? 'cell-red' : '';
     const pros = (a.pros||[]).map(p => `<li>${p}</li>`).join('');
     const cons = (a.cons||[]).map(c => `<li>${c}</li>`).join('');
     const desc = d.desc || repN(a.operation) || '';
@@ -695,6 +720,7 @@ function renderStrategies() {
         <div class="sc-metric"><div class="m-val">${eStock}</div><div class="m-label">到期市值</div></div>
         <div class="sc-metric"><div class="m-val">${eCash}</div><div class="m-label">到期现金(含分红)</div></div>
         <div class="sc-metric"><div class="m-val ${pnlClass}">${pnlStr}</div><div class="m-label">持仓盈亏</div></div>
+        <div class="sc-metric"><div class="m-val ${gClass}">${gStatus}</div><div class="m-label">网格状态</div></div>
       </div>
       <div class="sc-pros"><div class="sc-title">优势</div><ul>${pros}</ul></div>
       <div class="sc-cons"><div class="sc-title">劣势</div><ul>${cons}</ul></div>
