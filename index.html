@@ -682,15 +682,29 @@ function updateChart() {
 function renderStrategies() {
   const n = stockMeta.name;
   const grid = document.getElementById('strategyGrid');
+  const hold = result.find(d => d.name === '买入持有');
+  const holdRet = hold ? hold.total_return : 0;
+  const gridResults = result.filter(d => d.name !== '买入持有');
+  const bestGridRet = gridResults.length ? Math.max(...gridResults.map(d => d.total_return)) : -Infinity;
   grid.innerHTML = result.map((d, i) => {
     const a = ANALYSIS[d.name] || {};
-    const isBest = d.name === '动态趋势网格' || d.name === '月度重置网格';
-    const isBad = d.total_return < 0.06 && d.name !== '买入持有';
     const isBase = d.name === '买入持有';
-    const badge = isBase ? '<span class="sc-badge badge-base">基准</span>'
-      : isBest ? '<span class="sc-badge badge-best">推荐</span>'
-      : isBad ? '<span class="sc-badge badge-bad">不推荐</span>'
-      : '<span class="sc-badge badge-warn">一般</span>';
+    /* 徽章逻辑: 与买入持有基准比较, 而非硬编码策略名或固定阈值 */
+    let badge;
+    if (isBase) {
+      badge = '<span class="sc-badge badge-base">基准</span>';
+    } else if (d.total_return === bestGridRet) {
+      badge = '<span class="sc-badge badge-best">推荐</span>';
+    } else if (holdRet > 0) {
+      const ratio = d.total_return / holdRet;
+      badge = ratio >= 0.8 ? '<span class="sc-badge badge-best">推荐</span>'
+        : ratio >= 0.5 ? '<span class="sc-badge badge-warn">一般</span>'
+        : '<span class="sc-badge badge-bad">不推荐</span>';
+    } else {
+      badge = d.total_return > 0 ? '<span class="sc-badge badge-best">推荐</span>'
+        : d.total_return > holdRet ? '<span class="sc-badge badge-warn">一般</span>'
+        : '<span class="sc-badge badge-bad">不推荐</span>';
+    }
     const ret = fmtPct(d.total_return), ann = fmtPct(d.annual_return), dd = fmtPct(d.max_drawdown);
     /* 开始/到期: 股票市值 + 现金(含分红) */
     const sStock = fmtWan(d.start_stock_value || 0);
