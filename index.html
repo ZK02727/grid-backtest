@@ -380,11 +380,12 @@ const ANALYSIS = {
 const COLORS = ['#1565c0','#e65100','#2e7d32','#c62828','#6a1b9a','#00838f','#f57f17','#5d4037'];
 
 /* ================= 回测引擎 (Python移植) ================= */
-function runHold(sub, INITIAL, divMap, splitMap) {
+function runHold(sub, INITIAL, divMap, splitMap, initPos) {
   const firstClose = sub[0].c;
   const lastClose = sub[sub.length-1].c;
+  const buyBudget = initPos || INITIAL;
   const slipPrice = firstClose * (1 + SLIP);
-  const qty = Math.floor(INITIAL / slipPrice / LOT_SIZE) * LOT_SIZE;
+  const qty = Math.floor(buyBudget / slipPrice / LOT_SIZE) * LOT_SIZE;
   const cost = slipPrice * qty;
   const fee = Math.max(COMM * cost, COMM_MIN);
   let cash = INITIAL - cost - fee;
@@ -421,28 +422,29 @@ function runHold(sub, INITIAL, divMap, splitMap) {
   const vol = Math.sqrt(variance) * Math.sqrt(245);
   const sharpe = vol > 0 ? ((mean*245) - 0) / vol : 0;
 
-  return { name: '买入持有', desc: '基准: 期初全仓买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, equity };
+  return { name: '买入持有', desc: '基准: 按初始仓位买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, equity };
 }
 
-function runPairGrid(sub, config, INIT, divMap, splitMap) {
+function runPairGrid(sub, config, INIT, divMap, splitMap, initPosBudget) {
   const gap = config.gap; let qty = config.qty; const nAbove = config.n_above, nBelow = config.n_below;
   const resetDays = config.reset_days || 0;
   const baseRatio = config.base_ratio || 0;
   const boxLow = config.box_low, boxHigh = config.box_high;
   let center = sub[0].c;
   const lastClose = sub[sub.length-1].c;
-  const startStockValue = qty * sub[0].c;
   let cash = INIT, shares = 0, dividendIncome = 0;
   let buyCnt = 0, sellCnt = 0, baseShares = 0;
   let totalBuyCost = 0, totalBoughtShares = 0, totalSellProceeds = 0, soldShares = 0;
   let awaitSell = {}, awaitBuy = {};
   const equity = [];
   let peak = 0, maxDD = 0;
+  const posBudget = initPosBudget || INIT;
 
   function initGrid(centerPrice) {
     awaitSell = {}; awaitBuy = {};
+    let spentOnBase = 0;
     if (baseRatio > 0 && baseShares === 0) {
-      const baseVal = INIT * baseRatio;
+      const baseVal = posBudget * baseRatio;
       const baseQty = Math.floor(baseVal / (centerPrice * (1 + SLIP)) / LOT_SIZE) * LOT_SIZE;
       if (baseQty > 0) {
         const cost = centerPrice * (1 + SLIP) * baseQty;
@@ -450,13 +452,15 @@ function runPairGrid(sub, config, INIT, divMap, splitMap) {
         if (cost + fee <= cash) {
           cash -= cost + fee; shares += baseQty; baseShares = baseQty;
           totalBuyCost += cost + fee; totalBoughtShares += baseQty;
+          spentOnBase = cost + fee;
         }
       }
     }
     for (let i = 1; i <= nBelow; i++) awaitBuy[Math.round(centerPrice * (1 - gap * i) * 100) / 100] = qty;
     let totalQty = nAbove * qty;
+    const gridBudget = posBudget - spentOnBase;
     const need = centerPrice * (1 + SLIP) * totalQty + Math.max(COMM * centerPrice * totalQty, COMM_MIN);
-    if (need > cash) totalQty = Math.floor((cash - 10) / (centerPrice * (1 + SLIP) * qty)) * qty;
+    if (need > gridBudget) totalQty = Math.floor((gridBudget - 10) / (centerPrice * (1 + SLIP) * qty)) * qty;
     if (totalQty > 0) {
       const cost = centerPrice * (1 + SLIP) * totalQty;
       const fee = Math.max(COMM * cost, COMM_MIN);
@@ -467,6 +471,8 @@ function runPairGrid(sub, config, INIT, divMap, splitMap) {
   }
 
   initGrid(center);
+  const startStockValue = shares * center;
+  const startCash = cash;
   const eq0 = cash + shares * center;
   equity.push([sub[0].d, eq0]);
   peak = eq0;
@@ -783,13 +789,16 @@ function runBacktest() {
     (stockMeta.splits || []).forEach(sp => splitMap[sp[0]] = sp[1]);
     const userBaseRatio = initPos / amt;
     const firstClose = sub[0].c;
-    /* 动态计算每档股数: qty = floor(amt * qty_ratio / price / LOT_SIZE) * LOT_SIZE */
+    /* 动态计算每档股数: 用初始仓位预算反算, 使初始买入市值≈initPos */
     const results = [];
-    results.push(runHold(sub, amt, divMap, splitMap));
+    results.push(runHold(sub, amt, divMap, splitMap, initPos));
     STRATEGIES.forEach(cfg => {
-      const qty = Math.floor((amt * cfg.qty_ratio) / firstClose / LOT_SIZE) * LOT_SIZE;
-      const cfgFull = Object.assign({}, cfg, { qty: qty, base_ratio: userBaseRatio });
-      results.push(runPairGrid(sub, cfgFull, amt, divMap, splitMap));
+      const nAbove = cfg.n_above;
+      const baseR = cfg.base_ratio || 0;
+      const gridBudget = initPos * (1 - baseR);
+      const qty = Math.floor((gridBudget / nAbove) / firstClose / LOT_SIZE) * LOT_SIZE;
+      const cfgFull = Object.assign({}, cfg, { qty: qty, base_ratio: cfg.base_ratio !== undefined ? userBaseRatio : 0 });
+      results.push(runPairGrid(sub, cfgFull, amt, divMap, splitMap, initPos));
     });
     result = results;
     renderOverview(results);
@@ -797,7 +806,7 @@ function runBacktest() {
     renderChart();
     renderStrategies();
     renderAdvice(results);
-    status.textContent = '完成: ' + sub.length + ' 个交易日 (' + s + ' ~ ' + e + '), 总资金 ' + fmtWan(amt) + ', 初始仓位 ' + fmtWan(initPos) + ', 首日收盘 ' + firstClose + ', 每档约 ' + Math.floor((amt * 0.057) / firstClose / LOT_SIZE) * LOT_SIZE + '股';
+    status.textContent = '完成: ' + sub.length + ' 个交易日 (' + s + ' ~ ' + e + '), 总资金 ' + fmtWan(amt) + ', 初始仓位 ' + fmtWan(initPos) + ', 首日收盘 ' + firstClose + ', 每档约 ' + Math.floor((initPos / 6) / firstClose / LOT_SIZE) * LOT_SIZE + '股';
   } catch (err) {
     status.textContent = '回测出错: ' + err.message;
     console.error(err);
