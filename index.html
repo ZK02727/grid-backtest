@@ -383,7 +383,8 @@ const COLORS = ['#1565c0','#e65100','#2e7d32','#c62828','#6a1b9a','#00838f','#f5
 function runHold(sub, INITIAL, divMap, splitMap, initPos) {
   const firstClose = sub[0].c;
   const lastClose = sub[sub.length-1].c;
-  const buyBudget = initPos || INITIAL;
+  /* 买入持有: 始终全仓买入(忽略 initPos), 与其他网格策略区分 */
+  const buyBudget = INITIAL;
   const slipPrice = firstClose * (1 + SLIP);
   const qty = Math.floor(buyBudget / slipPrice / LOT_SIZE) * LOT_SIZE;
   const cost = slipPrice * qty;
@@ -422,7 +423,7 @@ function runHold(sub, INITIAL, divMap, splitMap, initPos) {
   const vol = Math.sqrt(variance) * Math.sqrt(245);
   const sharpe = vol > 0 ? ((mean*245) - 0) / vol : 0;
 
-  return { name: '买入持有', desc: '基准: 按初始仓位买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: '-', grid_high: null, grid_low: null, equity };
+  return { name: '买入持有', desc: '基准: 期初全仓买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: '-', grid_high: null, grid_low: null, equity };
 }
 
 function runPairGrid(sub, config, INIT, divMap, splitMap, initPosBudget) {
