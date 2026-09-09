@@ -382,11 +382,13 @@ const COLORS = ['#1565c0','#e65100','#2e7d32','#c62828','#6a1b9a','#00838f','#f5
 /* ================= 回测引擎 (Python移植) ================= */
 function runHold(sub, INITIAL, divMap, splitMap) {
   const firstClose = sub[0].c;
+  const lastClose = sub[sub.length-1].c;
   const slipPrice = firstClose * (1 + SLIP);
   const qty = Math.floor(INITIAL / slipPrice / LOT_SIZE) * LOT_SIZE;
   const cost = slipPrice * qty;
   const fee = Math.max(COMM * cost, COMM_MIN);
   let cash = INITIAL - cost - fee;
+  const startCash = cash;
   let shares = qty;
   let dividendIncome = 0;
   const equity = [];
@@ -418,7 +420,8 @@ function runHold(sub, INITIAL, divMap, splitMap) {
   const variance = dr.length ? dr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/dr.length : 0;
   const vol = Math.sqrt(variance) * Math.sqrt(245);
   const sharpe = vol > 0 ? ((mean*245) - 0) / vol : 0;
-  return { name: '买入持有', desc: '基准: 期初全仓买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, equity };
+
+  return { name: '买入持有', desc: '基准: 期初全仓买入, 吃分红, 不动', final_equity: finalEq, start_equity: INITIAL, total_return: totalRet, annual_return: annRet, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: 1, sell_cnt: 0, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: qty * firstClose, start_cash: startCash, end_stock_value: shares * lastClose, equity };
 }
 
 function runPairGrid(sub, config, INIT, divMap, splitMap) {
@@ -427,6 +430,8 @@ function runPairGrid(sub, config, INIT, divMap, splitMap) {
   const baseRatio = config.base_ratio || 0;
   const boxLow = config.box_low, boxHigh = config.box_high;
   let center = sub[0].c;
+  const lastClose = sub[sub.length-1].c;
+  const startStockValue = qty * sub[0].c;
   let cash = INIT, shares = 0, dividendIncome = 0;
   let buyCnt = 0, sellCnt = 0, baseShares = 0;
   let totalBuyCost = 0, totalBoughtShares = 0, totalSellProceeds = 0, soldShares = 0;
@@ -561,7 +566,7 @@ function runPairGrid(sub, config, INIT, divMap, splitMap) {
   const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
   let gridProfit = 0;
   if (totalBoughtShares > 0) gridProfit = totalSellProceeds - totalBuyCost * (soldShares / totalBoughtShares);
-  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, equity };
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: INIT - startStockValue, end_stock_value: shares * lastClose, equity };
 }
 
 /* ================= 渲染 ================= */
@@ -658,8 +663,11 @@ function renderStrategies() {
       : isBad ? '<span class="sc-badge badge-bad">不推荐</span>'
       : '<span class="sc-badge badge-warn">一般</span>';
     const ret = fmtPct(d.total_return), ann = fmtPct(d.annual_return), dd = fmtPct(d.max_drawdown);
-    const startEq = fmtWan(d.start_equity);
-    const endEq = fmtWan(d.final_equity);
+    /* 开始/到期: 股票市值 + 现金(含分红) */
+    const sStock = fmtWan(d.start_stock_value || 0);
+    const sCash = fmtWan(d.start_cash || 0);
+    const eStock = fmtWan(d.end_stock_value || 0);
+    const eCash = fmtWan(d.end_cash || 0);
     const pnl = d.final_equity - d.start_equity;
     const pnlStr = (pnl >= 0 ? '+' : '') + fmtWan(Math.abs(pnl));
     const pnlClass = pnl >= 0 ? 'cell-green' : 'cell-red';
@@ -675,9 +683,11 @@ function renderStrategies() {
         <div class="sc-metric"><div class="m-val">${dd}</div><div class="m-label">最大回撤</div></div>
         <div class="sc-metric"><div class="m-val">${d.sharpe.toFixed(2)}</div><div class="m-label">夏普</div></div>
         <div class="sc-metric"><div class="m-val">${d.buy_cnt}/${d.sell_cnt}</div><div class="m-label">买/卖</div></div>
-        <div class="sc-metric"><div class="m-val">${d.dividend_income>0?fmtWan(d.dividend_income):'-'}</div><div class="m-label">分红</div></div>
-        <div class="sc-metric"><div class="m-val">${startEq}</div><div class="m-label">开始持仓金额</div></div>
-        <div class="sc-metric"><div class="m-val">${endEq}</div><div class="m-label">到期持仓金额</div></div>
+        <div class="sc-metric"><div class="m-val">${d.dividend_income>0?fmtWan(d.dividend_income):'-'}</div><div class="m-label">分红收入</div></div>
+        <div class="sc-metric"><div class="m-val">${sStock}</div><div class="m-label">开始市值</div></div>
+        <div class="sc-metric"><div class="m-val">${sCash}</div><div class="m-label">开始现金</div></div>
+        <div class="sc-metric"><div class="m-val">${eStock}</div><div class="m-label">到期市值</div></div>
+        <div class="sc-metric"><div class="m-val">${eCash}</div><div class="m-label">到期现金(含分红)</div></div>
         <div class="sc-metric"><div class="m-val ${pnlClass}">${pnlStr}</div><div class="m-label">持仓盈亏</div></div>
       </div>
       <div class="sc-pros"><div class="sc-title">优势</div><ul>${pros}</ul></div>
