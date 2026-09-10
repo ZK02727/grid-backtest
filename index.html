@@ -191,7 +191,7 @@ tr:hover { background: var(--card2); }
 
 <div class="header">
   <h1 id="mainTitle">网格策略回测看板</h1>
-  <div class="sub">21个标的(A股·美股·商品) · 可选回测区间 / 投资金额 / 初始仓位 · 5年真实数据 · 8种策略即时回测</div>
+  <div class="sub">21个标的(A股·美股·商品) · 可选回测区间 / 投资金额 / 初始仓位 · 5年真实数据 · 12种策略即时回测</div>
   <div class="tags">
     <span class="tag">数据源: 腾讯财经(不复权)</span>
     <span class="tag" id="tagCost">成本: 佣金万2.5 + 印花税万5 + 滑点0.1%</span>
@@ -345,6 +345,14 @@ const STRATEGIES = [
   { name: '丰水期持有+枯水期网格', gap: 0.05, qty_ratio: 0.057, n_above: 5, n_below: 5, reset_days: 0, seasonal: true, desc: '丰水期(6-9月)持有不动吃分红, 枯水期(10月-次年5月)切换5%间距网格' },
 ];
 
+/* ================= 常规策略配置 ================= */
+const CONVENTIONAL = [
+  { name: '定投策略(DCA)', type: 'dca', period: 22, desc: '每22个交易日(约1月)定额买入, 不择时不卖出, 平摊成本' },
+  { name: '均线择时(MA金叉死叉)', type: 'ma', fast: 5, slow: 20, desc: 'MA5上穿MA20全仓买入, MA5下穿MA20清仓卖出, 顺势而为' },
+  { name: '止盈止损', type: 'stoploss', stopLoss: 0.08, takeProfit: 0.15, desc: '买入后跌8%止损清仓, 涨15%止盈卖出, 然后重新建仓' },
+  { name: 'RSI超买超卖', type: 'rsi', period: 14, oversold: 30, overbought: 70, desc: 'RSI<30超卖买入, RSI>70超买卖出, 逆向投资捕捉反弹' },
+];
+
 /* {n} = 当前标的名称, 运行时替换 */
 const ANALYSIS = {
   '买入持有': { pros: ['无需盯盘，省心省力', '充分享受分红复利', '在单边牛市中收益最大化', '手续费最低'], cons: ['牛市顶点回撤大', '没有任何主动管理', '遇到熊市全程坐过山车'], fit: '适合坚定看好{n}、不愿折腾的投资者', operation: '直接全仓买入，定期收分红，不动' },
@@ -356,8 +364,12 @@ const ANALYSIS = {
   '箱体止盈网格': { pros: ['有止盈止损边界', '回撤小', '逻辑清晰'], cons: ['突破箱体后失效', '箱体太窄', '卖出后踏空'], fit: '适合波段，趋势性强的标的不适合', operation: '以基准价±10%设箱体，触顶卖触底买。建议仅在高位震荡阶段短期使用' },
   '动态趋势网格': { pros: ['收益接近持有', '短期重置紧跟趋势', '牛市不踏空'], cons: ['回撤略高于持有', '重置频繁可能错过反转', '交易次数少'], fit: '最推荐！趋势型标的的最优网格策略', operation: '5%间距，每5个交易日按最新价重建网格。核心：网格中心跟随趋势移动' },
   '丰水期持有+枯水期网格': { pros: ['丰水期持有吃满分红', '枯水期网格高抛低吸', '顺应来水规律'], cons: ['仅适合水电标的', '切换时可能踏空', '枯水期网格收益取决于震荡幅度'], fit: '适合长江电力等水电标的', operation: '丰水期(6月1日-9月30日)持有不动吃分红; 枯水期(10月1日-次年5月31日)切换5%间距×10档网格' },
+  '定投策略(DCA)': { pros: ['无需择时, 纪律性强', '平摊成本, 降低择时风险', '适合长期积累', '操作极简, 适合上班族'], cons: ['单边牛市收益远不如全仓买入', '下跌趋势中持续亏损', '无主动止损能力', '资金利用率低(后期才满仓)'], fit: '适合波动较大、长期向好的{n}, 不确定底部在哪时的首选', operation: '每22个交易日(约1个月)用总资金的1/24买入, 持有不动, 吃分红, 不择时卖出' },
+  '均线择时(MA金叉死叉)': { pros: ['顺势而为, 不逆趋势操作', '能捕捉大趋势行情', '机制清晰, 易于理解', '牛市能满仓吃涨幅'], cons: ['震荡市频繁假信号导致反复亏损', '信号滞后, 买卖点偏晚', '频繁交易手续费高', '盘整期反复打脸'], fit: '适合趋势性强的{n}, 震荡市表现差', operation: '计算MA5和MA20, MA5上穿MA20当日收盘全仓买入, MA5下穿MA20当日收盘清仓卖出, 中间不动' },
+  '止盈止损': { pros: ['严格控回撤, 亏8%必走', '锁定15%利润, 不贪婪', '纪律性强, 克服人性弱点', '适合波动大的标的'], cons: ['可能被洗盘出局后大涨', '止盈太早错过大牛行情', '频繁止损磨损本金', '盘整频繁触发止损'], fit: '适合波动较大的{n}, 心态不稳者的纪律工具', operation: '用初始仓位满仓买入, 跌8%清仓止损, 涨15%止盈卖出后空仓等待, 下次重新买入需要价格从止损/止盈后回升5%确认' },
+  'RSI超买超卖': { pros: ['逆向投资, 买在恐慌卖在贪婪', '震荡市中高抛低吸效果好', 'RSI是经典指标, 信号明确', '无需复杂参数'], cons: ['强趋势中RSI长期极值导致信号失灵', '超卖可能更超卖, 抄底抄在半山腰', '卖出后可能继续大涨踏空', '需要耐心等待信号'], fit: '适合震荡型{n}, 强趋势标的容易失灵', operation: '计算14日RSI, RSI<30时全仓买入, RSI>70时清仓卖出, 中间持有不动。每次只看RSI阈值, 不参考其他指标' },
 };
-const COLORS = ['#1565c0','#e65100','#2e7d32','#c62828','#6a1b9a','#00838f','#f57f17','#5d4037','#00695c'];
+const COLORS = ['#1565c0','#e65100','#2e7d32','#c62828','#6a1b9a','#00838f','#f57f17','#5d4037','#00695c','#283593','#bf360c','#1b5e20','#e65100'];
 
 /* ================= 回测引擎 (Python移植) ================= */
 function runHold(sub, INITIAL, divMap, splitMap, initPos) {
@@ -776,6 +788,305 @@ function runSeasonalGrid(sub, config, INIT, divMap, splitMap, initPosBudget) {
   return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: gridStatus, grid_high: gridHigh, grid_low: gridLow, equity };
 }
 
+/* ================= 常规策略 ================= */
+/* 定投策略(DCA): 每 period 个交易日定额买入, 不卖出 */
+function runDCA(sub, config, INIT, divMap, splitMap, initPos) {
+  const period = config.period;
+  const lastClose = sub[sub.length-1].c;
+  const numPeriods = Math.ceil(sub.length / period);
+  const dcaAmount = INIT / numPeriods;
+  let cash = INIT, shares = 0, dividendIncome = 0;
+  let buyCnt = 0, sellCnt = 0;
+  let totalBuyCost = 0, totalBoughtShares = 0;
+  const equity = [];
+  let peak = 0, maxDD = 0;
+  let startStockValue = 0, startCash = INIT;
+  for (let idx = 0; idx < sub.length; idx++) {
+    const row = sub[idx];
+    const c = row.c, d = row.d;
+    if (splitMap[d] !== undefined) shares *= splitMap[d];
+    if (idx % period === 0) {
+      const slipP = c * (1 + SLIP);
+      const buyQty = Math.floor(dcaAmount / slipP / LOT_SIZE) * LOT_SIZE;
+      if (buyQty > 0) {
+        const cost = slipP * buyQty;
+        const fee = Math.max(COMM * cost, COMM_MIN);
+        if (cost + fee <= cash) {
+          cash -= cost + fee; shares += buyQty; buyCnt++;
+          totalBuyCost += cost + fee; totalBoughtShares += buyQty;
+        }
+      }
+      if (idx === 0) { startStockValue = shares * c; startCash = cash; }
+    }
+    if (divMap[d] !== undefined) {
+      const divCash = divMap[d] * shares;
+      cash += divCash; dividendIncome += divCash;
+    }
+    const eqNow = cash + shares * c;
+    equity.push([d, eqNow]);
+    if (eqNow > peak) peak = eqNow;
+    const dd = (peak - eqNow) / peak;
+    if (dd > maxDD) maxDD = dd;
+  }
+  const finalEq = equity[equity.length-1][1];
+  const totalRet = finalEq / INIT - 1;
+  const nYears = equity.length / 245;
+  const ann = totalRet > -1 ? Math.pow(1 + totalRet, 1/nYears) - 1 : -1;
+  const dr = [];
+  for (let i = 1; i < equity.length; i++) dr.push(equity[i][1]/equity[i-1][1] - 1);
+  const mean = dr.length ? dr.reduce((a,b)=>a+b,0)/dr.length : 0;
+  const variance = dr.length ? dr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/dr.length : 0;
+  const vol = Math.sqrt(variance) * Math.sqrt(245);
+  const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: 0, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: '定投持有', grid_high: null, grid_low: null, equity };
+}
+
+/* 均线择时(MA金叉死叉): MA5上穿MA20买入, MA5下穿MA20卖出 */
+function runMATrend(sub, config, INIT, divMap, splitMap, initPos) {
+  const fast = config.fast, slow = config.slow;
+  const lastClose = sub[sub.length-1].c;
+  const posBudget = initPos || INIT;
+  let cash = INIT, shares = 0, dividendIncome = 0;
+  let buyCnt = 0, sellCnt = 0;
+  let totalBuyCost = 0, totalBoughtShares = 0, totalSellProceeds = 0, soldShares = 0;
+  const equity = [];
+  let peak = 0, maxDD = 0;
+  let inPosition = false;
+  let prevFast = 0, prevSlow = 0;
+  let startStockValue = 0, startCash = INIT, firstSet = false;
+  function calcMA(idx, p) {
+    if (idx < p - 1) return 0;
+    let sum = 0;
+    for (let i = idx - p + 1; i <= idx; i++) sum += sub[i].c;
+    return sum / p;
+  }
+  for (let idx = 0; idx < sub.length; idx++) {
+    const row = sub[idx];
+    const c = row.c, d = row.d;
+    if (splitMap[d] !== undefined) shares *= splitMap[d];
+    const maFast = calcMA(idx, fast);
+    const maSlow = calcMA(idx, slow);
+    if (idx >= slow - 1) {
+      if (!inPosition && maFast > maSlow && prevFast <= prevSlow) {
+        const slipP = c * (1 + SLIP);
+        const buyQty = Math.floor(posBudget / slipP / LOT_SIZE) * LOT_SIZE;
+        if (buyQty > 0) {
+          const cost = slipP * buyQty;
+          const fee = Math.max(COMM * cost, COMM_MIN);
+          if (cost + fee <= cash) {
+            cash -= cost + fee; shares += buyQty; buyCnt++;
+            totalBuyCost += cost + fee; totalBoughtShares += buyQty;
+            inPosition = true;
+            if (!firstSet) { startStockValue = shares * c; startCash = cash; firstSet = true; }
+          }
+        }
+      } else if (inPosition && maFast < maSlow && prevFast >= prevSlow) {
+        if (shares > 0) {
+          const slipP = c * (1 - SLIP);
+          const proceeds = slipP * shares;
+          const fee = Math.max(COMM * proceeds, COMM_MIN) + STAMP * proceeds;
+          cash += proceeds - fee; totalSellProceeds += proceeds - fee; soldShares += shares; sellCnt++;
+          shares = 0;
+        }
+        inPosition = false;
+      }
+    }
+    prevFast = maFast; prevSlow = maSlow;
+    if (divMap[d] !== undefined) {
+      const divCash = divMap[d] * shares;
+      cash += divCash; dividendIncome += divCash;
+    }
+    const eqNow = cash + shares * c;
+    equity.push([d, eqNow]);
+    if (eqNow > peak) peak = eqNow;
+    const dd = (peak - eqNow) / peak;
+    if (dd > maxDD) maxDD = dd;
+  }
+  if (!firstSet) { startStockValue = 0; startCash = INIT; }
+  const finalEq = equity[equity.length-1][1];
+  const totalRet = finalEq / INIT - 1;
+  const nYears = equity.length / 245;
+  const ann = totalRet > -1 ? Math.pow(1 + totalRet, 1/nYears) - 1 : -1;
+  const dr = [];
+  for (let i = 1; i < equity.length; i++) dr.push(equity[i][1]/equity[i-1][1] - 1);
+  const mean = dr.length ? dr.reduce((a,b)=>a+b,0)/dr.length : 0;
+  const variance = dr.length ? dr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/dr.length : 0;
+  const vol = Math.sqrt(variance) * Math.sqrt(245);
+  const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
+  let gridProfit = 0;
+  if (totalBoughtShares > 0) gridProfit = totalSellProceeds - totalBuyCost * (soldShares / totalBoughtShares);
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: inPosition ? '持有中' : '空仓', grid_high: null, grid_low: null, equity };
+}
+
+/* 止盈止损: 跌stopLoss止损清仓, 涨takeProfit止盈卖出, 然后重新建仓 */
+function runStopLoss(sub, config, INIT, divMap, splitMap, initPos) {
+  const stopLoss = config.stopLoss, takeProfit = config.takeProfit;
+  const lastClose = sub[sub.length-1].c;
+  const posBudget = initPos || INIT;
+  let cash = INIT, shares = 0, dividendIncome = 0;
+  let buyCnt = 0, sellCnt = 0;
+  let totalBuyCost = 0, totalBoughtShares = 0, totalSellProceeds = 0, soldShares = 0;
+  const equity = [];
+  let peak = 0, maxDD = 0;
+  let inPosition = false, entryPrice = 0;
+  let startStockValue = 0, startCash = INIT, firstSet = false;
+  let lastSellDay = -1, lastSellType = '';
+  const cooldown = 1;
+  for (let idx = 0; idx < sub.length; idx++) {
+    const row = sub[idx];
+    const c = row.c, d = row.d;
+    if (splitMap[d] !== undefined) {
+      shares *= splitMap[d];
+      if (entryPrice > 0) entryPrice *= splitMap[d];
+    }
+    if (!inPosition) {
+      const canEnter = lastSellDay < 0 || (idx - lastSellDay) >= cooldown;
+      if (canEnter) {
+        const slipP = c * (1 + SLIP);
+        const buyQty = Math.floor(posBudget / slipP / LOT_SIZE) * LOT_SIZE;
+        if (buyQty > 0) {
+          const cost = slipP * buyQty;
+          const fee = Math.max(COMM * cost, COMM_MIN);
+          if (cost + fee <= cash) {
+            cash -= cost + fee; shares += buyQty; buyCnt++;
+            totalBuyCost += cost + fee; totalBoughtShares += buyQty;
+            inPosition = true; entryPrice = c;
+            if (!firstSet) { startStockValue = shares * c; startCash = cash; firstSet = true; }
+          }
+        }
+      }
+    } else {
+      const lossPct = (entryPrice - c) / entryPrice;
+      const gainPct = (c - entryPrice) / entryPrice;
+      if (lossPct >= stopLoss || gainPct >= takeProfit) {
+        if (shares > 0) {
+          const slipP = c * (1 - SLIP);
+          const proceeds = slipP * shares;
+          const fee = Math.max(COMM * proceeds, COMM_MIN) + STAMP * proceeds;
+          cash += proceeds - fee; totalSellProceeds += proceeds - fee; soldShares += shares; sellCnt++;
+          shares = 0;
+        }
+        inPosition = false; lastSellDay = idx;
+        lastSellType = lossPct >= stopLoss ? '止损清仓' : '止盈卖出';
+      }
+    }
+    if (divMap[d] !== undefined) {
+      const divCash = divMap[d] * shares;
+      cash += divCash; dividendIncome += divCash;
+    }
+    const eqNow = cash + shares * c;
+    equity.push([d, eqNow]);
+    if (eqNow > peak) peak = eqNow;
+    const dd = (peak - eqNow) / peak;
+    if (dd > maxDD) maxDD = dd;
+  }
+  if (!firstSet) { startStockValue = 0; startCash = INIT; }
+  const finalEq = equity[equity.length-1][1];
+  const totalRet = finalEq / INIT - 1;
+  const nYears = equity.length / 245;
+  const ann = totalRet > -1 ? Math.pow(1 + totalRet, 1/nYears) - 1 : -1;
+  const dr = [];
+  for (let i = 1; i < equity.length; i++) dr.push(equity[i][1]/equity[i-1][1] - 1);
+  const mean = dr.length ? dr.reduce((a,b)=>a+b,0)/dr.length : 0;
+  const variance = dr.length ? dr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/dr.length : 0;
+  const vol = Math.sqrt(variance) * Math.sqrt(245);
+  const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
+  let gridProfit = 0;
+  if (totalBoughtShares > 0) gridProfit = totalSellProceeds - totalBuyCost * (soldShares / totalBoughtShares);
+  let gridStatus;
+  if (inPosition) gridStatus = '持有中';
+  else if (lastSellType) gridStatus = lastSellType;
+  else gridStatus = '未建仓';
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: gridStatus, grid_high: null, grid_low: null, equity };
+}
+
+/* RSI超买超卖: RSI<oversold买入, RSI>overbought卖出 */
+function runRSI(sub, config, INIT, divMap, splitMap, initPos) {
+  const period = config.period;
+  const oversold = config.oversold, overbought = config.overbought;
+  const lastClose = sub[sub.length-1].c;
+  const posBudget = initPos || INIT;
+  let cash = INIT, shares = 0, dividendIncome = 0;
+  let buyCnt = 0, sellCnt = 0;
+  let totalBuyCost = 0, totalBoughtShares = 0, totalSellProceeds = 0, soldShares = 0;
+  const equity = [];
+  let peak = 0, maxDD = 0;
+  let inPosition = false;
+  let startStockValue = 0, startCash = INIT, firstSet = false;
+  let avgGain = 0, avgLoss = 0, rsi = 50, rsiReady = false;
+  for (let idx = 0; idx < sub.length; idx++) {
+    const row = sub[idx];
+    const c = row.c, d = row.d;
+    if (splitMap[d] !== undefined) shares *= splitMap[d];
+    if (idx > 0) {
+      const change = c - sub[idx-1].c;
+      const gain = change > 0 ? change : 0;
+      const loss = change < 0 ? -change : 0;
+      if (idx <= period) {
+        avgGain += gain; avgLoss += loss;
+        if (idx === period) {
+          avgGain /= period; avgLoss /= period;
+          rsi = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
+          rsiReady = true;
+        }
+      } else {
+        avgGain = (avgGain * (period - 1) + gain) / period;
+        avgLoss = (avgLoss * (period - 1) + loss) / period;
+        rsi = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
+        rsiReady = true;
+      }
+    }
+    if (rsiReady) {
+      if (!inPosition && rsi < oversold) {
+        const slipP = c * (1 + SLIP);
+        const buyQty = Math.floor(posBudget / slipP / LOT_SIZE) * LOT_SIZE;
+        if (buyQty > 0) {
+          const cost = slipP * buyQty;
+          const fee = Math.max(COMM * cost, COMM_MIN);
+          if (cost + fee <= cash) {
+            cash -= cost + fee; shares += buyQty; buyCnt++;
+            totalBuyCost += cost + fee; totalBoughtShares += buyQty;
+            inPosition = true;
+            if (!firstSet) { startStockValue = shares * c; startCash = cash; firstSet = true; }
+          }
+        }
+      } else if (inPosition && rsi > overbought) {
+        if (shares > 0) {
+          const slipP = c * (1 - SLIP);
+          const proceeds = slipP * shares;
+          const fee = Math.max(COMM * proceeds, COMM_MIN) + STAMP * proceeds;
+          cash += proceeds - fee; totalSellProceeds += proceeds - fee; soldShares += shares; sellCnt++;
+          shares = 0;
+        }
+        inPosition = false;
+      }
+    }
+    if (divMap[d] !== undefined) {
+      const divCash = divMap[d] * shares;
+      cash += divCash; dividendIncome += divCash;
+    }
+    const eqNow = cash + shares * c;
+    equity.push([d, eqNow]);
+    if (eqNow > peak) peak = eqNow;
+    const dd = (peak - eqNow) / peak;
+    if (dd > maxDD) maxDD = dd;
+  }
+  if (!firstSet) { startStockValue = 0; startCash = INIT; }
+  const finalEq = equity[equity.length-1][1];
+  const totalRet = finalEq / INIT - 1;
+  const nYears = equity.length / 245;
+  const ann = totalRet > -1 ? Math.pow(1 + totalRet, 1/nYears) - 1 : -1;
+  const dr = [];
+  for (let i = 1; i < equity.length; i++) dr.push(equity[i][1]/equity[i-1][1] - 1);
+  const mean = dr.length ? dr.reduce((a,b)=>a+b,0)/dr.length : 0;
+  const variance = dr.length ? dr.reduce((a,b)=>a+(b-mean)*(b-mean),0)/dr.length : 0;
+  const vol = Math.sqrt(variance) * Math.sqrt(245);
+  const sharpe = vol > 0 ? ((mean*245) - 0.02) / vol : 0;
+  let gridProfit = 0;
+  if (totalBoughtShares > 0) gridProfit = totalSellProceeds - totalBuyCost * (soldShares / totalBoughtShares);
+  return { name: config.name, desc: config.desc, final_equity: finalEq, start_equity: INIT, total_return: totalRet, annual_return: ann, max_drawdown: maxDD, sharpe, volatility: vol, buy_cnt: buyCnt, sell_cnt: sellCnt, dividend_income: dividendIncome, grid_profit: gridProfit, end_shares: shares, end_cash: cash, start_stock_value: startStockValue, start_cash: startCash, end_stock_value: shares * lastClose, grid_status: inPosition ? '持有中' : '空仓', grid_high: null, grid_low: null, equity };
+}
+
 /* ================= 渲染 ================= */
 let result = [];
 let chart = null;
@@ -793,7 +1104,7 @@ function renderOverview(res) {
   const title = document.getElementById('startDate').value + ' ~ ' + document.getElementById('endDate').value;
   const cards = [
     {label:'最佳策略', value: best.name, sub: fmtPct(best.total_return), color:'green'},
-    {label:'最佳网格', value: bestGrid.name, sub: fmtPct(bestGrid.total_return), color:'accent'},
+    {label:'最佳策略', value: bestGrid.name, sub: fmtPct(bestGrid.total_return), color:'accent'},
     {label:'买入持有收益', value: fmtPct(hold.total_return), sub:'年化'+fmtPct(hold.annual_return), color:'blue'},
     {label:'最低回撤', value: fmtPct(lowestDD.max_drawdown), sub: lowestDD.name, color:'yellow'},
     {label:'最高夏普', value: bestSharpe.sharpe.toFixed(2), sub: bestSharpe.name, color:'green'},
@@ -893,7 +1204,7 @@ function renderStrategies() {
     const pnlStr = (pnl >= 0 ? '+' : '') + fmtWan(Math.abs(pnl));
     const pnlClass = pnl >= 0 ? 'cell-green' : 'cell-red';
     const gStatus = d.grid_status || '-';
-    const gClass = gStatus === '网格内' ? 'cell-green' : gStatus === '涨穿网格' ? 'cell-yellow' : gStatus === '跌破网格' ? 'cell-red' : gStatus === '丰水期持有' ? 'cell-green' : '';
+    const gClass = gStatus === '网格内' ? 'cell-green' : gStatus === '涨穿网格' ? 'cell-yellow' : gStatus === '跌破网格' ? 'cell-red' : gStatus === '丰水期持有' ? 'cell-green' : (gStatus === '持有中' || gStatus === '定投持有' || gStatus === '止盈卖出') ? 'cell-green' : gStatus === '止损清仓' ? 'cell-red' : '';
     const pros = (a.pros||[]).map(p => `<li>${p}</li>`).join('');
     const cons = (a.cons||[]).map(c => `<li>${c}</li>`).join('');
     const desc = d.desc || repN(a.operation) || '';
@@ -935,23 +1246,23 @@ function renderAdvice(res) {
   let title, body1, body2;
   if (holdRet < 0) {
     title = n + '（' + meta.character + '）：本期下跌，网格策略防御价值凸显';
-    body1 = '本区间内 <span class="warn">买入持有亏损 ' + fmtPct(holdRet) + '</span>，最佳网格 <b>' + bestGrid.name + '</b> 收益 ' + fmtPct(gridRet) + '。标的震荡或下跌时，网格"高抛低吸"的优势显现。';
+    body1 = '本区间内 <span class="warn">买入持有亏损 ' + fmtPct(holdRet) + '</span>，最佳策略 <b>' + bestGrid.name + '</b> 收益 ' + fmtPct(gridRet) + '。标的震荡或下跌时，网格"高抛低吸"的优势显现。';
     body2 = '网格策略在本期<span class="ok">跑赢买入持有</span>，<b>' + bestGrid.name + '</b> 在控制回撤的同时实现了正收益。';
   } else if (gridRet > holdRet) {
     title = n + '（' + meta.character + '）：网格策略跑赢买入持有，震荡市中网格优势凸显';
-    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳网格 <b>' + bestGrid.name + '</b> 收益 <span class="ok">' + fmtPct(gridRet) + '</span>。<span class="ok">网格跑赢持有</span>，说明标的震荡特征明显，网格"高抛低吸"获利。';
+    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳策略 <b>' + bestGrid.name + '</b> 收益 <span class="ok">' + fmtPct(gridRet) + '</span>。<span class="ok">网格跑赢持有</span>，说明标的震荡特征明显，网格"高抛低吸"获利。';
     body2 = '本期网格优势明显，<b>' + bestGrid.name + '</b> 在获得更高收益的同时，还保留了网格的波动控制能力。';
   } else if (ratio > 0.9) {
     title = n + '（' + meta.character + '）：网格策略已接近买入持有，值得用网格增强收益';
-    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳网格 <b>' + bestGrid.name + '</b> 收益 <span class="ok">' + fmtPct(gridRet) + '</span>，差距很小。';
+    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳策略 <b>' + bestGrid.name + '</b> 收益 <span class="ok">' + fmtPct(gridRet) + '</span>，差距很小。';
     body2 = '关键在于<span class="highlight">让网格"追得上趋势"</span>。<b>' + bestGrid.name + '</b> 收益 ' + fmtPct(gridRet) + '，同时保留网格波动控制能力。';
   } else if (ratio > 0.5) {
     title = n + '（' + meta.character + '）：网格策略跑输持有但仍有价值';
-    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳网格 <b>' + bestGrid.name + '</b> 仅 ' + fmtPct(gridRet) + '。<span class="warn">网格"涨了就卖"导致部分踏空</span>。';
+    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳策略 <b>' + bestGrid.name + '</b> 仅 ' + fmtPct(gridRet) + '。<span class="warn">网格"涨了就卖"导致部分踏空</span>。';
     body2 = '关键在于<span class="highlight">让网格"追得上趋势"</span>。<b>' + bestGrid.name + '</b> 收益 ' + fmtPct(gridRet) + '，同时保留网格波动控制能力。';
   } else {
     title = n + '（' + meta.character + '）：纯网格严重跑输持有';
-    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳网格 <b>' + bestGrid.name + '</b> 仅 ' + fmtPct(gridRet) + '。<span class="warn">单边上涨中网格底仓越卖越少直至清仓</span>，之后完全踏空。';
+    body1 = '本区间内 <span class="ok">买入持有总收益 ' + fmtPct(holdRet) + '</span>，最佳策略 <b>' + bestGrid.name + '</b> 仅 ' + fmtPct(gridRet) + '。<span class="warn">单边上涨中网格底仓越卖越少直至清仓</span>，之后完全踏空。';
     body2 = '关键在于<span class="highlight">让网格"追得上趋势"</span>。<b>' + bestGrid.name + '</b> 收益 ' + fmtPct(gridRet) + '，同时保留网格波动控制能力。';
   }
 
@@ -1020,6 +1331,14 @@ function runBacktest() {
         results.push(runSeasonalGrid(sub, cfgFull, amt, divMap, splitMap, initPos));
       } else {
         results.push(runPairGrid(sub, cfgFull, amt, divMap, splitMap, initPos));
+      }
+    });
+    CONVENTIONAL.forEach(cfg => {
+      switch (cfg.type) {
+        case 'dca': results.push(runDCA(sub, cfg, amt, divMap, splitMap, initPos)); break;
+        case 'ma': results.push(runMATrend(sub, cfg, amt, divMap, splitMap, initPos)); break;
+        case 'stoploss': results.push(runStopLoss(sub, cfg, amt, divMap, splitMap, initPos)); break;
+        case 'rsi': results.push(runRSI(sub, cfg, amt, divMap, splitMap, initPos)); break;
       }
     });
     result = results;
