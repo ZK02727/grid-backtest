@@ -18,10 +18,10 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 .header .sub { font-size: 13px; color: var(--text2); }
 
 /* 统计概览 */
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.stat-card .sc-val { font-size: 24px; font-weight: 800; color: var(--accent); }
-.stat-card .sc-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+.stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 108px; }
+.stat-card .sc-val { font-size: 24px; font-weight: 800; color: var(--accent); line-height: 1.3; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stat-card .sc-label { font-size: 12px; color: var(--text2); margin-top: 6px; }
 .stat-card .sc-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
 .stat-card.green .sc-val { color: var(--green); }
 .stat-card.red .sc-val { color: var(--red); }
@@ -37,13 +37,28 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 
 /* 紧凑标的表格 */
 .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.stock-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stock-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
 .stock-table th { background: var(--card2); color: var(--accent); font-weight: 600; padding: 8px 10px; text-align: center; border-bottom: 2px solid var(--accent); white-space: nowrap; }
-.stock-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.stock-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stock-table tr:last-child td { border-bottom: none; }
 .stock-table tbody tr { cursor: pointer; transition: background .15s; }
 .stock-table tbody tr:hover { background: rgba(2,119,189,0.06); }
-.stock-table td:first-child { text-align: left; }
+/* 列宽分配: 标的/最新价/收益列等宽, 策略列较宽, 操作建议/查看按钮列自适应 */
+.stock-table th:nth-child(1), .stock-table td:nth-child(1) { text-align: left; width: 17%; }
+.stock-table th:nth-child(2), .stock-table td:nth-child(2) { width: 9%; }
+.stock-table th:nth-child(3), .stock-table td:nth-child(3) { width: 9%; }
+.stock-table th:nth-child(4), .stock-table td:nth-child(4) { width: 9%; }
+.stock-table th:nth-child(5), .stock-table td:nth-child(5) { width: 9%; }
+.stock-table th:nth-child(6), .stock-table td:nth-child(6) { width: 20%; }
+.stock-table th:nth-child(7), .stock-table td:nth-child(7) { width: 17%; }
+.stock-table th:nth-child(8), .stock-table td:nth-child(8) { width: 10%; }
+/* 数字列右对齐, 小数点对齐 */
+.stock-table th:nth-child(2), .stock-table td:nth-child(2),
+.stock-table th:nth-child(3), .stock-table td:nth-child(3),
+.stock-table th:nth-child(4), .stock-table td:nth-child(4),
+.stock-table th:nth-child(5), .stock-table td:nth-child(5) { text-align: right; font-variant-numeric: tabular-nums; }
+/* 收益列加窄空格保持百分号对齐 */
+.stock-table td:nth-child(3), .stock-table td:nth-child(4), .stock-table td:nth-child(5) { letter-spacing: 0.02em; }
 .stock-table .st-name { font-weight: 700; color: var(--text); }
 .stock-table .st-code { font-size: 11px; color: var(--text2); background: var(--card2); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--border); margin-left: 6px; }
 .stock-table .st-cat { font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 600; }
@@ -59,19 +74,21 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 .neutral { color: var(--text2); }
 
 /* 操作建议标签 */
-.action-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.action-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; line-height: 1.4; vertical-align: middle; }
 .act-green { background: rgba(46,125,50,0.1); color: var(--green); }
 .act-orange { background: rgba(230,81,0,0.1); color: var(--accent2); }
 .act-blue { background: rgba(2,119,189,0.1); color: var(--accent); }
 
 /* 查看按钮 */
-.view-btn { display: inline-block; font-size: 12px; color: var(--accent); text-decoration: none; padding: 4px 12px; border: 1px solid var(--accent); border-radius: 6px; transition: all .2s; white-space: nowrap; }
+.view-btn { display: inline-block; font-size: 12px; color: var(--accent); text-decoration: none; padding: 3px 12px; border: 1px solid var(--accent); border-radius: 6px; transition: all .2s; white-space: nowrap; vertical-align: middle; }
 .view-btn:hover { background: var(--accent); color: #fff; }
 
 .footer { text-align: center; padding: 24px 0; color: var(--text2); font-size: 12px; }
 .footer p { margin-bottom: 3px; }
 @media (max-width: 900px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
   .stock-table th:nth-child(4), .stock-table td:nth-child(4) { display: none; }
+  .stock-table th:nth-child(6), .stock-table td:nth-child(6) { display: none; }
 }
 </style>
 </head>
