@@ -1456,8 +1456,14 @@ function initControls() {
     });
   });
 
-  /* 初始化: 默认长江电力 */
-  switchStock('cjdl');
+  /* 初始化: 支持URL参数 ?stock=xxx */
+  var initKey = 'cjdl';
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var p = params.get('stock');
+    if (p && STOCKS[p]) initKey = p;
+  } catch(e) {}
+  switchStock(initKey);
 }
 
 initControls();
