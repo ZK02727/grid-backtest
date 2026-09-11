@@ -12,43 +12,41 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-.header { text-align: center; padding: 30px 0 20px; border-bottom: 2px solid var(--accent); margin-bottom: 25px; }
-.header h1 { font-size: 30px; color: var(--accent); margin-bottom: 8px; }
-.header .sub { font-size: 14px; color: var(--text2); }
-.header .tags { margin-top: 12px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.header .tag { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 3px 12px; font-size: 12px; color: var(--text2); }
-.header .links { margin-top: 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.header .links a { font-size: 13px; color: var(--accent); text-decoration: none; padding: 6px 16px; border: 1px solid var(--accent); border-radius: 6px; transition: all .2s; }
-.header .links a:hover { background: var(--accent); color: #fff; }
+.container { max-width: 1280px; margin: 0 auto; padding: 20px; }
+.header { text-align: center; padding: 24px 0 16px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; }
+.header h1 { font-size: 28px; color: var(--accent); margin-bottom: 6px; }
+.header .sub { font-size: 13px; color: var(--text2); }
 
 /* 统计概览 */
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 25px; }
-.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.stat-card .sc-val { font-size: 28px; font-weight: 800; color: var(--accent); }
-.stat-card .sc-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.stat-card .sc-val { font-size: 24px; font-weight: 800; color: var(--accent); }
+.stat-card .sc-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
 .stat-card .sc-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
 .stat-card.green .sc-val { color: var(--green); }
 .stat-card.red .sc-val { color: var(--red); }
-.stat-card.orange .sc-val { color: var(--accent2); }
 
 /* 分类导航 */
-.nav { position: sticky; top: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 10px 0; z-index: 100; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; }
+.nav { position: sticky; top: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 0; z-index: 100; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 18px; }
 .nav a { font-size: 12px; color: var(--accent); text-decoration: none; padding: 4px 12px; border-radius: 4px; transition: all .15s; }
 .nav a:hover { background: var(--accent); color: #fff; }
 
 /* 分类区块 */
-.section-title { font-size: 18px; color: var(--accent); margin: 25px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 8px; }
-.section-title .count { font-size: 13px; color: var(--text2); font-weight: normal; }
+.section-title { font-size: 17px; color: var(--accent); margin: 20px 0 10px; padding-left: 12px; border-left: 4px solid var(--accent); display: flex; align-items: center; gap: 8px; }
+.section-title .count { font-size: 12px; color: var(--text2); font-weight: normal; }
 
-/* 标的卡片网格 */
-.stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; margin-bottom: 20px; }
-.stock-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); transition: box-shadow .2s, transform .2s; cursor: pointer; }
-.stock-card:hover { box-shadow: 0 4px 16px rgba(2,119,189,0.12); transform: translateY(-2px); }
-.stock-card .sc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-.stock-card .sc-name { font-size: 18px; font-weight: 700; color: var(--text); }
-.stock-card .sc-code { font-size: 13px; color: var(--text2); background: var(--card2); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); }
-.stock-card .sc-cat { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+/* 紧凑标的表格 */
+.table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.stock-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stock-table th { background: var(--card2); color: var(--accent); font-weight: 600; padding: 8px 10px; text-align: center; border-bottom: 2px solid var(--accent); white-space: nowrap; }
+.stock-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table tbody tr { cursor: pointer; transition: background .15s; }
+.stock-table tbody tr:hover { background: rgba(2,119,189,0.06); }
+.stock-table td:first-child { text-align: left; }
+.stock-table .st-name { font-weight: 700; color: var(--text); }
+.stock-table .st-code { font-size: 11px; color: var(--text2); background: var(--card2); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--border); margin-left: 6px; }
+.stock-table .st-cat { font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 600; }
 .cat-银行金融 { background: rgba(21,101,192,0.1); color: #1565c0; }
 .cat-能源资源 { background: rgba(46,125,50,0.1); color: #2e7d32; }
 .cat-制造消费 { background: rgba(230,81,0,0.1); color: #e65100; }
@@ -56,59 +54,32 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 .cat-通信服务 { background: rgba(0,131,143,0.1); color: #00838f; }
 .cat-美股 { background: rgba(198,40,40,0.1); color: #c62828; }
 .cat-商品 { background: rgba(245,127,23,0.1); color: #f57c00; }
-.stock-card .sc-char { font-size: 12px; color: var(--text2); }
-
-/* 价格行 */
-.price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.price-row .pr-label { font-size: 12px; color: var(--text2); }
-.price-row .pr-val { font-size: 16px; font-weight: 700; }
-
-/* 多时间段回测表 */
-.period-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 10px; }
-.period-table th { background: var(--card2); color: var(--accent); font-weight: 600; padding: 6px 8px; text-align: center; border-bottom: 2px solid var(--accent); }
-.period-table td { padding: 6px 8px; text-align: center; border-bottom: 1px solid var(--border); }
-.period-table td:first-child { text-align: left; font-weight: 600; color: var(--text); }
 .pos { color: var(--green); font-weight: 600; }
 .neg { color: var(--red); font-weight: 600; }
 .neutral { color: var(--text2); }
-.period-table .best-row td { background: rgba(46,125,50,0.06); }
-.period-table .best-row td:first-child { border-left: 3px solid var(--green); }
-.period-table .hold-row td { background: rgba(21,101,192,0.04); }
 
-/* 操作建议 */
-.advice-box { background: linear-gradient(135deg, rgba(2,119,189,0.05), rgba(46,125,50,0.05)); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 10px; }
-.advice-box .ab-action { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-bottom: 6px; }
+/* 操作建议标签 */
+.action-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
 .act-green { background: rgba(46,125,50,0.1); color: var(--green); }
 .act-orange { background: rgba(230,81,0,0.1); color: var(--accent2); }
 .act-blue { background: rgba(2,119,189,0.1); color: var(--accent); }
-.advice-box .ab-text { font-size: 12px; color: var(--text); line-height: 1.7; }
 
-/* 链接按钮 */
-.link-row { display: flex; gap: 8px; margin-top: 4px; }
-.link-row a { font-size: 12px; color: var(--accent); text-decoration: none; padding: 5px 12px; border: 1px solid var(--accent); border-radius: 6px; transition: all .2s; }
-.link-row a:hover { background: var(--accent); color: #fff; }
-.link-row a.secondary { color: var(--text2); border-color: var(--border); }
-.link-row a.secondary:hover { background: var(--card2); color: var(--text); border-color: var(--text2); }
+/* 查看按钮 */
+.view-btn { display: inline-block; font-size: 12px; color: var(--accent); text-decoration: none; padding: 4px 12px; border: 1px solid var(--accent); border-radius: 6px; transition: all .2s; white-space: nowrap; }
+.view-btn:hover { background: var(--accent); color: #fff; }
 
-.footer { text-align: center; padding: 30px 0; color: var(--text2); font-size: 12px; }
-.footer p { margin-bottom: 4px; }
+.footer { text-align: center; padding: 24px 0; color: var(--text2); font-size: 12px; }
+.footer p { margin-bottom: 3px; }
+@media (max-width: 900px) {
+  .stock-table th:nth-child(4), .stock-table td:nth-child(4) { display: none; }
+}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="header">
   <h1>策略看板首页</h1>
-  <div class="sub">31个标的 × 13种策略 × 多时间段回测(1年/3年/5年) · 操作建议 · 一键跳转详细看板</div>
-  <div class="tags">
-    <span class="tag">数据源: 腾讯财经(不复权)</span>
-    <span class="tag">成本: 佣金万2.5/万1 + 印花税万5 + 滑点0.1%</span>
-    <span class="tag">分红计提: 按持仓股数现金发放</span>
-    <span class="tag">回测引擎: 与交互版完全一致</span>
-  </div>
-  <div class="links">
-    <a href="index.html" target="_blank">交互版回测看板</a>
-    <a href="dashboard.html" target="_blank">全标的策略看板</a>
-  </div>
+  <div class="sub">31个标的 · 一目了然 · 点击任意标的进入详细回测</div>
 </div>
 
 <div class="stats-row">
@@ -149,683 +120,355 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 <a href="#cat-商品">商品(3)</a>
 </div>
 <div class="section-title" id="cat-银行金融">银行金融 <span class="count">7个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=zgyh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国银行</span>
-    <span class="sc-code">601988</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">国有大行+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">6.50</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+22.8%</td><td class="pos">+91.4%</td><td class="pos">+154.1%</td><td class="pos" style="color:var(--red)">+14.5%</td><td class="pos" style="color:var(--red)">+16.3%</td><td>38.4万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+12.7%</td><td class="pos">+68.3%</td><td class="pos">+112.8%</td><td class="pos" style="color:var(--red)">+2.9%</td><td class="pos" style="color:var(--red)">+8.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有为主, 分红是核心收益来源。短期持有收益22.8%, 暂时跑赢策略12.7%, 网格可作增强</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=zgyh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-zgyh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=jtyh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">交通银行</span>
-    <span class="sc-code">601328</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">国有大行+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">7.40</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+7.6%</td><td class="pos">+53.1%</td><td class="pos">+112.9%</td><td class="pos" style="color:var(--red)">+14.7%</td><td class="pos" style="color:var(--red)">+17.7%</td><td>41.8万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+10.5%</td><td class="pos">+38.1%</td><td class="pos">+82.4%</td><td class="pos" style="color:var(--red)">+7.5%</td><td class="pos" style="color:var(--red)">+12.7%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加窄幅高频网格增强收益。短期策略收益10.5%优于持有7.6%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=jtyh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-jtyh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=nyyh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">农业银行</span>
-    <span class="sc-code">601288</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">国有大行+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">6.89</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-1.8%</td><td class="pos">+118.5%</td><td class="pos">+173.2%</td><td class="pos" style="color:var(--red)">+28.4%</td><td class="pos" style="color:var(--red)">+25.7%</td><td>39.1万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+13.3%</td><td class="pos">+75.9%</td><td class="pos">+110.4%</td><td class="pos" style="color:var(--red)">+9.6%</td><td class="pos" style="color:var(--red)">+22.9%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加RSI超买超卖增强收益。短期策略收益13.3%优于持有-1.8%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=nyyh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-nyyh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=icbc', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">工商银行</span>
-    <span class="sc-code">601398</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">慢牛+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">8.10</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+13.5%</td><td class="pos">+96.4%</td><td class="pos">+108.9%</td><td class="pos" style="color:var(--red)">+15.0%</td><td class="pos" style="color:var(--red)">+13.3%</td><td>33.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+13.8%</td><td class="pos">+68.0%</td><td class="pos">+80.6%</td><td class="pos" style="color:var(--red)">+6.7%</td><td class="pos" style="color:var(--red)">+10.3%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加窄幅高频网格增强收益。短期策略收益13.8%优于持有13.5%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=icbc" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-icbc" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=jsyh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">建设银行</span>
-    <span class="sc-code">601939</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">国有大行+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">10.85</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+24.7%</td><td class="pos">+101.1%</td><td class="pos">+120.7%</td><td class="pos" style="color:var(--red)">+11.1%</td><td class="pos" style="color:var(--red)">+13.4%</td><td>33.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+14.2%</td><td class="pos">+74.4%</td><td class="pos">+89.8%</td><td class="pos" style="color:var(--red)">+4.2%</td><td class="pos" style="color:var(--red)">+7.9%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有为主, 分红是核心收益来源。短期持有收益24.7%, 暂时跑赢策略14.2%, 网格可作增强</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=jsyh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-jsyh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=cmb', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">招商银行</span>
-    <span class="sc-code">600036</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">震荡+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">41.57</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+2.6%</td><td class="pos">+50.0%</td><td class="pos">+6.4%</td><td class="pos" style="color:var(--red)">+15.9%</td><td class="pos" style="color:var(--red)">+48.7%</td><td>19.3万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+6.8%</td><td class="pos">+35.5%</td><td class="pos">+29.1%</td><td class="pos" style="color:var(--red)">+8.3%</td><td class="pos" style="color:var(--red)">+40.2%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加定投策略(DCA)增强收益。短期策略收益6.8%优于持有2.6%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=cmb" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-cmb" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=pfyh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">浦发银行</span>
-    <span class="sc-code">600000</span>
-    <span class="sc-cat cat-银行金融">银行金融</span>
-    <span class="sc-char">股份行+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">9.30</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-28.5%</td><td class="pos">+48.5%</td><td class="pos">+22.3%</td><td class="pos" style="color:var(--red)">+39.0%</td><td class="pos" style="color:var(--red)">+35.7%</td><td>20.6万</td></tr><tr class="best-row"><td>短期最佳</td><td class="neg">-4.8%</td><td class="pos">+27.7%</td><td class="pos">+23.5%</td><td class="pos" style="color:var(--red)">+16.3%</td><td class="pos" style="color:var(--red)">+19.8%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加RSI超买超卖增强收益。短期策略收益-4.8%优于持有-28.5%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=pfyh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-pfyh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=zgyh', '_blank')">
+  <td><span class="st-name">中国银行</span><span class="st-code">601988</span></td>
+  <td>6.50</td>
+  <td class="pos">+22.8%</td>
+  <td class="pos">+91.4%</td>
+  <td class="pos">+154.1%</td>
+  <td>箱体止盈网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=zgyh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=jtyh', '_blank')">
+  <td><span class="st-name">交通银行</span><span class="st-code">601328</span></td>
+  <td>7.40</td>
+  <td class="pos">+7.6%</td>
+  <td class="pos">+53.1%</td>
+  <td class="pos">+112.9%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=jtyh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=nyyh', '_blank')">
+  <td><span class="st-name">农业银行</span><span class="st-code">601288</span></td>
+  <td>6.89</td>
+  <td class="neg">-1.8%</td>
+  <td class="pos">+118.5%</td>
+  <td class="pos">+173.2%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=nyyh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=icbc', '_blank')">
+  <td><span class="st-name">工商银行</span><span class="st-code">601398</span></td>
+  <td>8.10</td>
+  <td class="pos">+13.5%</td>
+  <td class="pos">+96.4%</td>
+  <td class="pos">+108.9%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=icbc" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=jsyh', '_blank')">
+  <td><span class="st-name">建设银行</span><span class="st-code">601939</span></td>
+  <td>10.85</td>
+  <td class="pos">+24.7%</td>
+  <td class="pos">+101.1%</td>
+  <td class="pos">+120.7%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=jsyh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=cmb', '_blank')">
+  <td><span class="st-name">招商银行</span><span class="st-code">600036</span></td>
+  <td>41.57</td>
+  <td class="pos">+2.6%</td>
+  <td class="pos">+50.0%</td>
+  <td class="pos">+6.4%</td>
+  <td>定投策略(DCA)</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=cmb" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=pfyh', '_blank')">
+  <td><span class="st-name">浦发银行</span><span class="st-code">600000</span></td>
+  <td>9.30</td>
+  <td class="neg">-28.5%</td>
+  <td class="pos">+48.5%</td>
+  <td class="pos">+22.3%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=pfyh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-能源资源">能源资源 <span class="count">10个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=cnooc', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国海油</span>
-    <span class="sc-code">600938</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">海上油气+高股息</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">34.42</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+35.8%</td><td class="pos">+99.5%</td><td class="pos">+184.4%</td><td class="pos" style="color:var(--red)">+37.8%</td><td class="pos" style="color:var(--red)">+34.9%</td><td>35.1万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+18.4%</td><td class="pos">+73.2%</td><td class="pos">+123.8%</td><td class="pos" style="color:var(--red)">+4.2%</td><td class="pos" style="color:var(--red)">+29.5%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有为主, 分红是核心收益来源。短期持有收益35.8%, 暂时跑赢策略18.4%, 网格可作增强</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=cnooc" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-cnooc" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=zsh', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国石化</span>
-    <span class="sc-code">600028</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">石油央企+高股息</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">5.56</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+1.3%</td><td class="pos">+5.0%</td><td class="pos">+80.2%</td><td class="pos" style="color:var(--red)">+41.1%</td><td class="pos" style="color:var(--red)">+34.7%</td><td>41.4万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+9.9%</td><td class="pos">+27.6%</td><td class="pos">+73.5%</td><td class="pos" style="color:var(--red)">+10.5%</td><td class="pos" style="color:var(--red)">+21.1%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加RSI超买超卖增强收益。短期策略收益9.9%优于持有1.3%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=zsh" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-zsh" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=petrochina', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国石油</span>
-    <span class="sc-code">601857</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">慢牛+中分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">11.27</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+31.9%</td><td class="pos">+62.8%</td><td class="pos">+184.5%</td><td class="pos" style="color:var(--red)">+32.0%</td><td class="pos" style="color:var(--red)">+28.7%</td><td>43.4万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+20.6%</td><td class="pos">+49.2%</td><td class="pos">+139.2%</td><td class="pos" style="color:var(--red)">+5.1%</td><td class="pos" style="color:var(--red)">+23.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">RSI超买超卖</span>
-    <div class="ab-text">综合评估, 推荐RSI超买超卖, 短期收益20.6%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=petrochina" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-petrochina" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=shenhua', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国神华</span>
-    <span class="sc-code">601088</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">单边慢牛+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">47.28</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+29.3%</td><td class="pos">+96.0%</td><td class="pos">+241.1%</td><td class="pos" style="color:var(--red)">+22.6%</td><td class="pos" style="color:var(--red)">+21.0%</td><td>67.3万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+19.4%</td><td class="pos">+69.8%</td><td class="pos">+194.2%</td><td class="pos" style="color:var(--red)">+3.6%</td><td class="pos" style="color:var(--red)">+14.8%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有为主, 分红是核心收益来源。短期持有收益29.3%, 暂时跑赢策略19.4%, 网格可作增强</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=shenhua" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-shenhua" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=hndl', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">华能国际</span>
-    <span class="sc-code">600011</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">火电央企+分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">6.95</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-5.2%</td><td class="neg">-4.1%</td><td class="pos">+97.2%</td><td class="pos" style="color:var(--red)">+28.3%</td><td class="pos" style="color:var(--red)">+40.2%</td><td>21.9万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+19.6%</td><td class="pos">+38.7%</td><td class="pos">+189.5%</td><td class="pos" style="color:var(--red)">+6.5%</td><td class="pos" style="color:var(--red)">+23.4%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">RSI超买超卖</span>
-    <div class="ab-text">综合评估, 推荐RSI超买超卖, 短期收益19.6%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=hndl" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-hndl" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=hnsd', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">华能水电</span>
-    <span class="sc-code">600025</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">水电红利+类长江电力</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">9.72</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+4.8%</td><td class="pos">+43.3%</td><td class="pos">+100.7%</td><td class="pos" style="color:var(--red)">+16.0%</td><td class="pos" style="color:var(--red)">+34.1%</td><td>17.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+11.4%</td><td class="pos">+15.7%</td><td class="pos">+80.3%</td><td class="pos" style="color:var(--red)">+6.9%</td><td class="pos" style="color:var(--red)">+19.7%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">窄幅高频网格</span>
-    <div class="ab-text">综合评估, 推荐窄幅高频网格, 短期收益11.4%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=hnsd" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-hnsd" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=luoyang', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">洛阳钼业</span>
-    <span class="sc-code">603993</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">铜钴资源+高波动</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">19.09</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+50.7%</td><td class="pos">+244.1%</td><td class="pos">+192.1%</td><td class="pos" style="color:var(--red)">+39.0%</td><td class="pos" style="color:var(--red)">+50.2%</td><td>13.8万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+53.1%</td><td class="pos">+203.7%</td><td class="pos">+176.4%</td><td class="pos" style="color:var(--red)">+11.1%</td><td class="pos" style="color:var(--red)">+37.1%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-orange">轻仓+止盈止损</span>
-    <div class="ab-text">波动剧烈, 丰水期持有+枯水期网格短期收益53.1%, 注意止盈止损纪律, 控制仓位</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=luoyang" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-luoyang" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=zjj', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">紫金矿业</span>
-    <span class="sc-code">601899</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">黄金铜矿龙头+红利</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">34.11</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+42.4%</td><td class="pos">+186.8%</td><td class="pos">+234.1%</td><td class="pos" style="color:var(--red)">+41.1%</td><td class="pos" style="color:var(--red)">+40.2%</td><td>18.9万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+22.9%</td><td class="pos">+121.8%</td><td class="pos">+167.4%</td><td class="pos" style="color:var(--red)">+4.8%</td><td class="pos" style="color:var(--red)">+22.8%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">经典对称网格</span>
-    <div class="ab-text">综合评估, 推荐经典对称网格, 短期收益22.9%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=zjj" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-zjj" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=cjdl', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">长江电力</span>
-    <span class="sc-code">600900</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">慢牛+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">28.05</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+3.4%</td><td class="pos">+40.3%</td><td class="pos">+71.6%</td><td class="pos" style="color:var(--red)">+10.4%</td><td class="pos" style="color:var(--red)">+17.0%</td><td>23.4万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+5.5%</td><td class="pos">+20.6%</td><td class="pos">+50.2%</td><td class="pos" style="color:var(--red)">+7.6%</td><td class="pos" style="color:var(--red)">+11.9%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加窄幅高频网格增强收益。短期策略收益5.5%优于持有3.4%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=cjdl" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-cjdl" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=sxmy', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">陕西煤业</span>
-    <span class="sc-code">601225</span>
-    <span class="sc-cat cat-能源资源">能源资源</span>
-    <span class="sc-char">煤炭龙头+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">26.09</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+33.3%</td><td class="pos">+77.4%</td><td class="pos">+206.7%</td><td class="pos" style="color:var(--red)">+23.5%</td><td class="pos" style="color:var(--red)">+31.4%</td><td>65.9万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+24.2%</td><td class="pos">+62.3%</td><td class="pos">+176.2%</td><td class="pos" style="color:var(--red)">+6.1%</td><td class="pos" style="color:var(--red)">+19.3%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有为主, 分红是核心收益来源。短期持有收益33.3%, 暂时跑赢策略24.2%, 网格可作增强</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=sxmy" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-sxmy" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=cnooc', '_blank')">
+  <td><span class="st-name">中国海油</span><span class="st-code">600938</span></td>
+  <td>34.42</td>
+  <td class="pos">+35.8%</td>
+  <td class="pos">+99.5%</td>
+  <td class="pos">+184.4%</td>
+  <td>宽幅防御网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=cnooc" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=zsh', '_blank')">
+  <td><span class="st-name">中国石化</span><span class="st-code">600028</span></td>
+  <td>5.56</td>
+  <td class="pos">+1.3%</td>
+  <td class="pos">+5.0%</td>
+  <td class="pos">+80.2%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=zsh" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=petrochina', '_blank')">
+  <td><span class="st-name">中国石油</span><span class="st-code">601857</span></td>
+  <td>11.27</td>
+  <td class="pos">+31.9%</td>
+  <td class="pos">+62.8%</td>
+  <td class="pos">+184.5%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-blue">RSI超买超卖</span></td>
+  <td><a class="view-btn" href="index.html?stock=petrochina" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=shenhua', '_blank')">
+  <td><span class="st-name">中国神华</span><span class="st-code">601088</span></td>
+  <td>47.28</td>
+  <td class="pos">+29.3%</td>
+  <td class="pos">+96.0%</td>
+  <td class="pos">+241.1%</td>
+  <td>宽幅防御网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=shenhua" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=hndl', '_blank')">
+  <td><span class="st-name">华能国际</span><span class="st-code">600011</span></td>
+  <td>6.95</td>
+  <td class="neg">-5.2%</td>
+  <td class="neg">-4.1%</td>
+  <td class="pos">+97.2%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-blue">RSI超买超卖</span></td>
+  <td><a class="view-btn" href="index.html?stock=hndl" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=hnsd', '_blank')">
+  <td><span class="st-name">华能水电</span><span class="st-code">600025</span></td>
+  <td>9.72</td>
+  <td class="pos">+4.8%</td>
+  <td class="pos">+43.3%</td>
+  <td class="pos">+100.7%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-blue">窄幅高频网格</span></td>
+  <td><a class="view-btn" href="index.html?stock=hnsd" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=luoyang', '_blank')">
+  <td><span class="st-name">洛阳钼业</span><span class="st-code">603993</span></td>
+  <td>19.09</td>
+  <td class="pos">+50.7%</td>
+  <td class="pos">+244.1%</td>
+  <td class="pos">+192.1%</td>
+  <td>丰水期持有+枯水期网格</td>
+  <td><span class="action-tag act-orange">轻仓+止盈止损</span></td>
+  <td><a class="view-btn" href="index.html?stock=luoyang" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=zjj', '_blank')">
+  <td><span class="st-name">紫金矿业</span><span class="st-code">601899</span></td>
+  <td>34.11</td>
+  <td class="pos">+42.4%</td>
+  <td class="pos">+186.8%</td>
+  <td class="pos">+234.1%</td>
+  <td>经典对称网格</td>
+  <td><span class="action-tag act-blue">经典对称网格</span></td>
+  <td><a class="view-btn" href="index.html?stock=zjj" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=cjdl', '_blank')">
+  <td><span class="st-name">长江电力</span><span class="st-code">600900</span></td>
+  <td>28.05</td>
+  <td class="pos">+3.4%</td>
+  <td class="pos">+40.3%</td>
+  <td class="pos">+71.6%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=cjdl" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=sxmy', '_blank')">
+  <td><span class="st-name">陕西煤业</span><span class="st-code">601225</span></td>
+  <td>26.09</td>
+  <td class="pos">+33.3%</td>
+  <td class="pos">+77.4%</td>
+  <td class="pos">+206.7%</td>
+  <td>宽幅防御网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=sxmy" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-制造消费">制造消费 <span class="count">2个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=gree', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">格力电器</span>
-    <span class="sc-code">000651</span>
-    <span class="sc-cat cat-制造消费">制造消费</span>
-    <span class="sc-char">宽幅震荡+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">38.95</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+1.2%</td><td class="pos">+34.6%</td><td class="pos">+14.5%</td><td class="pos" style="color:var(--red)">+9.0%</td><td class="pos" style="color:var(--red)">+30.9%</td><td>33.9万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+4.4%</td><td class="pos">+32.3%</td><td class="pos">+46.4%</td><td class="pos" style="color:var(--red)">+6.5%</td><td class="pos" style="color:var(--red)">+13.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加窄幅高频网格增强收益。短期策略收益4.4%优于持有1.2%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=gree" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-gree" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=midea', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">美的集团</span>
-    <span class="sc-code">000333</span>
-    <span class="sc-cat cat-制造消费">制造消费</span>
-    <span class="sc-char">家电龙头+稳定分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">86.20</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+17.3%</td><td class="pos">+70.2%</td><td class="pos">+52.9%</td><td class="pos" style="color:var(--red)">+12.2%</td><td class="pos" style="color:var(--red)">+46.7%</td><td>22.7万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+23.3%</td><td class="pos">+38.5%</td><td class="pos">+42.8%</td><td class="pos" style="color:var(--red)">+6.6%</td><td class="pos" style="color:var(--red)">+10.1%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">RSI超买超卖</span>
-    <div class="ab-text">综合评估, 推荐RSI超买超卖, 短期收益23.3%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=midea" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-midea" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=gree', '_blank')">
+  <td><span class="st-name">格力电器</span><span class="st-code">000651</span></td>
+  <td>38.95</td>
+  <td class="pos">+1.2%</td>
+  <td class="pos">+34.6%</td>
+  <td class="pos">+14.5%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=gree" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=midea', '_blank')">
+  <td><span class="st-name">美的集团</span><span class="st-code">000333</span></td>
+  <td>86.20</td>
+  <td class="pos">+17.3%</td>
+  <td class="pos">+70.2%</td>
+  <td class="pos">+52.9%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-blue">RSI超买超卖</span></td>
+  <td><a class="view-btn" href="index.html?stock=midea" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-交运">交运 <span class="count">1个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=daqin', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">大秦铁路</span>
-    <span class="sc-code">601006</span>
-    <span class="sc-cat cat-交运">交运</span>
-    <span class="sc-char">长期横盘+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">4.82</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-17.6%</td><td class="neg">-20.5%</td><td class="pos">+12.4%</td><td class="pos" style="color:var(--red)">+23.8%</td><td class="pos" style="color:var(--red)">+28.0%</td><td>31.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="neg">-1.9%</td><td class="neg">-4.1%</td><td class="pos">+23.0%</td><td class="pos" style="color:var(--red)">+6.3%</td><td class="pos" style="color:var(--red)">+9.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加均线择时(MA金叉死叉)增强收益。短期策略收益-1.9%优于持有-17.6%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=daqin" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-daqin" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=daqin', '_blank')">
+  <td><span class="st-name">大秦铁路</span><span class="st-code">601006</span></td>
+  <td>4.82</td>
+  <td class="neg">-17.6%</td>
+  <td class="neg">-20.5%</td>
+  <td class="pos">+12.4%</td>
+  <td>均线择时(MA金叉死叉)</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=daqin" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-通信服务">通信服务 <span class="count">1个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=zggd', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">中国移动</span>
-    <span class="sc-code">600941</span>
-    <span class="sc-cat cat-通信服务">通信服务</span>
-    <span class="sc-char">运营商央企+高分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">97.17</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-8.2%</td><td class="pos">+12.3%</td><td class="pos">+101.4%</td><td class="pos" style="color:var(--red)">+18.9%</td><td class="pos" style="color:var(--red)">+19.6%</td><td>34.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+3.9%</td><td class="pos">+21.9%</td><td class="pos">+81.7%</td><td class="pos" style="color:var(--red)">+6.9%</td><td class="pos" style="color:var(--red)">+13.9%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">持有+网格增强</span>
-    <div class="ab-text">底仓持有吃分红, 叠加RSI超买超卖增强收益。短期策略收益3.9%优于持有-8.2%, 网格增厚明显</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=zggd" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-zggd" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=zggd', '_blank')">
+  <td><span class="st-name">中国移动</span><span class="st-code">600941</span></td>
+  <td>97.17</td>
+  <td class="neg">-8.2%</td>
+  <td class="pos">+12.3%</td>
+  <td class="pos">+101.4%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-green">持有+网格增强</span></td>
+  <td><a class="view-btn" href="index.html?stock=zggd" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-美股">美股 <span class="count">7个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=meta', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">Meta</span>
-    <span class="sc-code">META</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">V型反转+近期分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">653.69</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-16.0%</td><td class="pos">+115.4%</td><td class="pos">+87.0%</td><td class="pos" style="color:var(--red)">+32.4%</td><td class="pos" style="color:var(--red)">+76.7%</td><td>1.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+14.2%</td><td class="pos">+91.6%</td><td class="pos">+105.3%</td><td class="pos" style="color:var(--red)">+14.9%</td><td class="pos" style="color:var(--red)">+31.2%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">RSI超买超卖</span>
-    <div class="ab-text">综合评估, 推荐RSI超买超卖, 短期收益14.2%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=meta" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-meta" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=amzn', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">亚马逊</span>
-    <span class="sc-code">AMZN</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">震荡+无分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">252.40</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+9.0%</td><td class="pos">+98.5%</td><td class="pos">+51.2%</td><td class="pos" style="color:var(--red)">+21.7%</td><td class="pos" style="color:var(--red)">+55.6%</td><td>0.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+21.8%</td><td class="pos">+63.6%</td><td class="pos">+67.0%</td><td class="pos" style="color:var(--red)">+13.4%</td><td class="pos" style="color:var(--red)">+36.2%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">网格高抛低吸</span>
-    <div class="ab-text">震荡特征明显, 窄幅高频网格短期收益21.8%, 高抛低吸正当时</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=amzn" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-amzn" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=msft', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">微软</span>
-    <span class="sc-code">MSFT</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">慢牛+稳定分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">491.65</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-2.7%</td><td class="pos">+57.1%</td><td class="pos">+77.9%</td><td class="pos" style="color:var(--red)">+34.4%</td><td class="pos" style="color:var(--red)">+36.9%</td><td>5.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+10.8%</td><td class="pos">+22.1%</td><td class="pos">+48.5%</td><td class="pos" style="color:var(--red)">+18.0%</td><td class="pos" style="color:var(--red)">+26.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">RSI超买超卖</span>
-    <div class="ab-text">综合评估, 推荐RSI超买超卖, 短期收益10.8%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=msft" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-msft" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=tsla', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">特斯拉</span>
-    <span class="sc-code">TSLA</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">高波动+无分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">367.81</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="neg">-11.9%</td><td class="pos">+40.7%</td><td class="pos">+55.3%</td><td class="pos" style="color:var(--red)">+39.1%</td><td class="pos" style="color:var(--red)">+73.6%</td><td>0.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+22.9%</td><td class="pos">+60.9%</td><td class="pos">+133.2%</td><td class="pos" style="color:var(--red)">+23.7%</td><td class="pos" style="color:var(--red)">+52.9%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-orange">轻仓+止盈止损</span>
-    <div class="ab-text">波动剧烈, 窄幅高频网格短期收益22.9%, 注意止盈止损纪律, 控制仓位</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=tsla" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-tsla" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=nvda', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">英伟达</span>
-    <span class="sc-code">NVDA</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">AI超级牛市+拆股</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">223.67</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+26.9%</td><td class="pos">+408.1%</td><td class="pos">+1033.2%</td><td class="pos" style="color:var(--red)">+20.2%</td><td class="pos" style="color:var(--red)">+66.3%</td><td>1.9万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+28.8%</td><td class="pos">+273.3%</td><td class="pos">+721.4%</td><td class="pos" style="color:var(--red)">+8.1%</td><td class="pos" style="color:var(--red)">+40.3%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">等待趋势</span>
-    <div class="ab-text">趋势性标的但近期走势偏弱, 可用经典对称网格等待趋势启动</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=nvda" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-nvda" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=aapl', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">苹果</span>
-    <span class="sc-code">AAPL</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">慢牛+稳定分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">315.34</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+32.9%</td><td class="pos">+83.1%</td><td class="pos">+120.0%</td><td class="pos" style="color:var(--red)">+13.8%</td><td class="pos" style="color:var(--red)">+32.9%</td><td>3.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+12.8%</td><td class="pos">+59.9%</td><td class="pos">+77.8%</td><td class="pos" style="color:var(--red)">+2.1%</td><td class="pos" style="color:var(--red)">+26.3%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">窄幅高频网格</span>
-    <div class="ab-text">综合评估, 推荐窄幅高频网格, 短期收益12.8%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=aapl" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-aapl" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=googl', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">谷歌</span>
-    <span class="sc-code">GOOGL</span>
-    <span class="sc-cat cat-美股">美股</span>
-    <span class="sc-char">震荡+近期开始分红</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-09)</span>
-    <span class="pr-val">330.65</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+31.4%</td><td class="pos">+145.8%</td><td class="pos">+146.3%</td><td class="pos" style="color:var(--red)">+21.0%</td><td class="pos" style="color:var(--red)">+44.3%</td><td>1.5万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+23.1%</td><td class="pos">+91.9%</td><td class="pos">+116.3%</td><td class="pos" style="color:var(--red)">+1.6%</td><td class="pos" style="color:var(--red)">+23.1%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-green">网格高抛低吸</span>
-    <div class="ab-text">震荡特征明显, RSI超买超卖短期收益23.1%, 高抛低吸正当时</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=googl" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-googl" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=meta', '_blank')">
+  <td><span class="st-name">Meta</span><span class="st-code">META</span></td>
+  <td>653.69</td>
+  <td class="neg">-16.0%</td>
+  <td class="pos">+115.4%</td>
+  <td class="pos">+87.0%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-blue">RSI超买超卖</span></td>
+  <td><a class="view-btn" href="index.html?stock=meta" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=amzn', '_blank')">
+  <td><span class="st-name">亚马逊</span><span class="st-code">AMZN</span></td>
+  <td>252.40</td>
+  <td class="pos">+9.0%</td>
+  <td class="pos">+98.5%</td>
+  <td class="pos">+51.2%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-green">网格高抛低吸</span></td>
+  <td><a class="view-btn" href="index.html?stock=amzn" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=msft', '_blank')">
+  <td><span class="st-name">微软</span><span class="st-code">MSFT</span></td>
+  <td>491.65</td>
+  <td class="neg">-2.7%</td>
+  <td class="pos">+57.1%</td>
+  <td class="pos">+77.9%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-blue">RSI超买超卖</span></td>
+  <td><a class="view-btn" href="index.html?stock=msft" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=tsla', '_blank')">
+  <td><span class="st-name">特斯拉</span><span class="st-code">TSLA</span></td>
+  <td>367.81</td>
+  <td class="neg">-11.9%</td>
+  <td class="pos">+40.7%</td>
+  <td class="pos">+55.3%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-orange">轻仓+止盈止损</span></td>
+  <td><a class="view-btn" href="index.html?stock=tsla" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=nvda', '_blank')">
+  <td><span class="st-name">英伟达</span><span class="st-code">NVDA</span></td>
+  <td>223.67</td>
+  <td class="pos">+26.9%</td>
+  <td class="pos">+408.1%</td>
+  <td class="pos">+1033.2%</td>
+  <td>经典对称网格</td>
+  <td><span class="action-tag act-blue">等待趋势</span></td>
+  <td><a class="view-btn" href="index.html?stock=nvda" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=aapl', '_blank')">
+  <td><span class="st-name">苹果</span><span class="st-code">AAPL</span></td>
+  <td>315.34</td>
+  <td class="pos">+32.9%</td>
+  <td class="pos">+83.1%</td>
+  <td class="pos">+120.0%</td>
+  <td>窄幅高频网格</td>
+  <td><span class="action-tag act-blue">窄幅高频网格</span></td>
+  <td><a class="view-btn" href="index.html?stock=aapl" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=googl', '_blank')">
+  <td><span class="st-name">谷歌</span><span class="st-code">GOOGL</span></td>
+  <td>330.65</td>
+  <td class="pos">+31.4%</td>
+  <td class="pos">+145.8%</td>
+  <td class="pos">+146.3%</td>
+  <td>RSI超买超卖</td>
+  <td><span class="action-tag act-green">网格高抛低吸</span></td>
+  <td><a class="view-btn" href="index.html?stock=googl" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 <div class="section-title" id="cat-商品">商品 <span class="count">3个标的</span></div>
-<div class="stock-grid">
-<div class="stock-card" onclick="window.open('index.html?stock=au', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">华安黄金ETF</span>
-    <span class="sc-code">518880</span>
-    <span class="sc-cat cat-商品">商品</span>
-    <span class="sc-char">单边大涨</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">9.08</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+15.6%</td><td class="pos">+102.6%</td><td class="pos">+146.5%</td><td class="pos" style="color:var(--red)">+30.5%</td><td class="pos" style="color:var(--red)">+30.5%</td><td>0.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+12.4%</td><td class="pos">+66.2%</td><td class="pos">+95.0%</td><td class="pos" style="color:var(--red)">+1.9%</td><td class="pos" style="color:var(--red)">+24.6%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">等待趋势</span>
-    <div class="ab-text">趋势性标的但近期走势偏弱, 可用宽幅防御网格等待趋势启动</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=au" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-au" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=silver', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">国投白银LOF</span>
-    <span class="sc-code">161226</span>
-    <span class="sc-cat cat-商品">商品</span>
-    <span class="sc-char">白银期货+高波动</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">1.96</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+74.3%</td><td class="pos">+158.0%</td><td class="pos">+132.9%</td><td class="pos" style="color:var(--red)">+67.6%</td><td class="pos" style="color:var(--red)">+67.6%</td><td>0.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+65.4%</td><td class="pos">+90.4%</td><td class="pos">+120.1%</td><td class="pos" style="color:var(--red)">+40.8%</td><td class="pos" style="color:var(--red)">+66.6%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-orange">轻仓+止盈止损</span>
-    <div class="ab-text">波动剧烈, 均线择时(MA金叉死叉)短期收益65.4%, 注意止盈止损纪律, 控制仓位</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=silver" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-silver" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-<div class="stock-card" onclick="window.open('index.html?stock=copper', '_blank')">
-  <div class="sc-head">
-    <span class="sc-name">大成有色ETF</span>
-    <span class="sc-code">159980</span>
-    <span class="sc-cat cat-商品">商品</span>
-    <span class="sc-char">有色金属期货(铜权重高)</span>
-  </div>
-  <div class="price-row">
-    <span class="pr-label">最新收盘 (2026-09-10)</span>
-    <span class="pr-val">2.22</span>
-  </div>
-  <div style="overflow-x:auto"><table class="period-table"><thead><tr><th>策略</th><th>近1年</th><th>近3年</th><th>近5年</th><th>1年回撤</th><th>5年回撤</th><th>5年分红</th></tr></thead><tbody><tr class="hold-row"><td>买入持有</td><td class="pos">+29.4%</td><td class="pos">+41.0%</td><td class="pos">+55.8%</td><td class="pos" style="color:var(--red)">+15.6%</td><td class="pos" style="color:var(--red)">+32.9%</td><td>0.0万</td></tr><tr class="best-row"><td>短期最佳</td><td class="pos">+17.9%</td><td class="pos">+23.1%</td><td class="pos">+44.4%</td><td class="pos" style="color:var(--red)">+3.0%</td><td class="pos" style="color:var(--red)">+22.0%</td><td>-</td></tr></tbody></table></div>
-  <div class="advice-box">
-    <span class="ab-action act-blue">丰水期持有+枯水期网格</span>
-    <div class="ab-text">综合评估, 推荐丰水期持有+枯水期网格, 短期收益17.9%</div>
-  </div>
-  <div class="link-row">
-    <a href="index.html?stock=copper" target="_blank" onclick="event.stopPropagation()">交互回测 &rarr;</a>
-    <a href="dashboard.html#stock-copper" target="_blank" onclick="event.stopPropagation()" class="secondary">全策略对比 &rarr;</a>
-  </div>
-</div>
-</div>
+<div class="table-wrap"><table class="stock-table"><thead><tr>
+<th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
+</tr></thead><tbody>
+<tr onclick="window.open('index.html?stock=au', '_blank')">
+  <td><span class="st-name">华安黄金ETF</span><span class="st-code">518880</span></td>
+  <td>9.08</td>
+  <td class="pos">+15.6%</td>
+  <td class="pos">+102.6%</td>
+  <td class="pos">+146.5%</td>
+  <td>宽幅防御网格</td>
+  <td><span class="action-tag act-blue">等待趋势</span></td>
+  <td><a class="view-btn" href="index.html?stock=au" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=silver', '_blank')">
+  <td><span class="st-name">国投白银LOF</span><span class="st-code">161226</span></td>
+  <td>1.96</td>
+  <td class="pos">+74.3%</td>
+  <td class="pos">+158.0%</td>
+  <td class="pos">+132.9%</td>
+  <td>均线择时(MA金叉死叉)</td>
+  <td><span class="action-tag act-orange">轻仓+止盈止损</span></td>
+  <td><a class="view-btn" href="index.html?stock=silver" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=copper', '_blank')">
+  <td><span class="st-name">大成有色ETF</span><span class="st-code">159980</span></td>
+  <td>2.22</td>
+  <td class="pos">+29.4%</td>
+  <td class="pos">+41.0%</td>
+  <td class="pos">+55.8%</td>
+  <td>丰水期持有+枯水期网格</td>
+  <td><span class="action-tag act-blue">丰水期持有+枯水期网格</span></td>
+  <td><a class="view-btn" href="index.html?stock=copper" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+</tbody></table></div>
 
 <div class="footer">
-  <p>策略说明: 买入持有=基准 | 8种网格=经典/宽幅/窄幅/月度重置/底仓+网格/箱体止盈/动态趋势/丰水期枯水期 | 4种常规=定投DCA/均线择时MA/止盈止损/RSI超买超卖</p>
-  <p>推荐逻辑: 综合(收益*0.6+夏普*0.4)评分选最佳策略, 分别针对1年/3年/5年给出推荐</p>
-  <p>操作建议: 根据标的特征+近期表现自动生成, 仅供学习参考, 不构成投资建议</p>
-  <p>点击卡片或链接可跳转到交互版回测看板(可调参数)或全标的策略看板(全策略对比)</p>
+  <p>点击任意标的行可进入交互版详细回测（可调参数），或点击“查看”按钮直达该标的分析</p>
+  <p>策略说明: 买入持有=基准 | 8种网格 + 4种常规策略 | 综合(收益*0.6+夏普*0.4)评分推荐</p>
+  <p>数据口径: 不复权日线, 分红现金计提, 交易含佣金+印花税+滑点 | 仅供学习参考, 不构成投资建议</p>
 </div>
 </div>
 </body>
