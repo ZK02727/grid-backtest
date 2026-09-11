@@ -96,24 +96,24 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 <div class="container">
 <div class="header">
   <h1>策略看板首页</h1>
-  <div class="sub">31个标的 · 一目了然 · 点击任意标的进入详细回测</div>
+  <div class="sub">{total_stocks}个标的 · 一目了然 · 点击任意标的进入详细回测</div>
 </div>
 
 <div class="stats-row">
   <div class="stat-card">
-    <div class="sc-val">31</div>
+    <div class="sc-val">33</div>
     <div class="sc-label">标的总数</div>
-    <div class="sc-sub">A股24 + 美股7</div>
+    <div class="sc-sub">A股21 + 美股7 + 加密2</div>
   </div>
   <div class="stat-card green">
-    <div class="sc-val">+14.5%</div>
+    <div class="sc-val">+12.6%</div>
     <div class="sc-label">近1年平均收益</div>
-    <div class="sc-sub">23/31 盈利</div>
+    <div class="sc-sub">23/33 盈利</div>
   </div>
   <div class="stat-card green">
-    <div class="sc-val">+141.2%</div>
+    <div class="sc-val">+135.2%</div>
     <div class="sc-label">近5年平均收益</div>
-    <div class="sc-sub">31/31 盈利</div>
+    <div class="sc-sub">32/33 盈利</div>
   </div>
   <div class="stat-card green">
     <div class="sc-val">国投白银LOF</div>
@@ -134,7 +134,7 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
 <a href="#cat-交运">交运(1)</a>
 <a href="#cat-通信服务">通信服务(1)</a>
 <a href="#cat-美股">美股(7)</a>
-<a href="#cat-商品">商品(3)</a>
+<a href="#cat-商品">商品(5)</a>
 </div>
 <div class="section-title" id="cat-银行金融">银行金融 <span class="count">7个标的</span></div>
 <div class="table-wrap"><table class="stock-table"><thead><tr>
@@ -446,7 +446,7 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
   <td><a class="view-btn" href="index.html?stock=googl" target="_blank" onclick="event.stopPropagation()">查看</a></td>
 </tr>
 </tbody></table></div>
-<div class="section-title" id="cat-商品">商品 <span class="count">3个标的</span></div>
+<div class="section-title" id="cat-商品">商品 <span class="count">5个标的</span></div>
 <div class="table-wrap"><table class="stock-table"><thead><tr>
 <th>标的</th><th>最新价</th><th>近1年</th><th>近3年</th><th>近5年</th><th>短期策略</th><th>操作建议</th><th></th>
 </tr></thead><tbody>
@@ -479,6 +479,26 @@ body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(-
   <td>丰水期持有+枯水期网格</td>
   <td><span class="action-tag act-blue">丰水期持有+枯水期网格</span></td>
   <td><a class="view-btn" href="index.html?stock=copper" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=btc', '_blank')">
+  <td><span class="st-name">比特币</span><span class="st-code">BTC</span></td>
+  <td>77207.90</td>
+  <td class="neg">-14.8%</td>
+  <td class="pos">+41.3%</td>
+  <td class="pos">+85.6%</td>
+  <td>定投策略(DCA)</td>
+  <td><span class="action-tag act-orange">轻仓+止盈止损</span></td>
+  <td><a class="view-btn" href="index.html?stock=btc" target="_blank" onclick="event.stopPropagation()">查看</a></td>
+</tr>
+<tr onclick="window.open('index.html?stock=eth', '_blank')">
+  <td><span class="st-name">以太坊</span><span class="st-code">ETH</span></td>
+  <td>2465.11</td>
+  <td class="neg">-20.3%</td>
+  <td class="pos">+8.2%</td>
+  <td class="neg">-2.8%</td>
+  <td>定投策略(DCA)</td>
+  <td><span class="action-tag act-orange">轻仓+止盈止损</span></td>
+  <td><a class="view-btn" href="index.html?stock=eth" target="_blank" onclick="event.stopPropagation()">查看</a></td>
 </tr>
 </tbody></table></div>
 
